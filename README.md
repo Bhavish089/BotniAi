@@ -2,7 +2,7 @@
 
 ## 🌾 Botni A.I – Smart Farming Assistant for India
 
-Boni A.I is a modular, voice-first, offline-capable mobile app designed to empower Indian farmers with real-time support through AI and local NGOs. Built for Smart India Hackathon 2025, it bridges the gap between rural communities and smart technology.
+Botni A.I is a modular, voice-first, offline-capable mobile app designed to empower Indian farmers with real-time support through AI and local NGOs. Built for Smart India Hackathon 2025, it bridges the gap between rural communities and smart technology.
 
 ## Frontend (Farmer-Facing App)
 
