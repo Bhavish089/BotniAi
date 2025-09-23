@@ -1,4 +1,4 @@
-#Bytecrafter is a repository for Bytecraft's Developer and Admin
+# Bytecrafter is a repository for Bytecraft's Developer and Admin
 
 ## 🌾 Boni A.I – Smart Farming Assistant for India
 
