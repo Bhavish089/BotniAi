@@ -2,7 +2,7 @@
 
 Botni A.I is a modular, voice-first, offline-capable mobile app designed to empower Indian farmers with real-time support through AI and local NGOs. Built for Smart India Hackathon 2025, it bridges the gap between rural communities and smart technology.
 
-The site is Mainly bradcasted on https://m17b30.me/
+The site is Mainly bradcasted on [Botni A.I.](https://bytecrafter.netlify.app/)
 
 ## Frontend (Farmer-Facing App)
 
