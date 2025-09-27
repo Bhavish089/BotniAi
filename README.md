@@ -6,12 +6,12 @@ The site is Mainly bradcasted on https://m17b30.me/
 
 ## Frontend (Farmer-Facing App)
 
-| Component           | Technology                        | Purpose                                      |
+| Component           | Technology                        | Function                                      |
 |---------------------|------------------------------------|----------------------------------------------|
 
 ## Backend (Routing, AI, Admin Portal)
 
-| Component           | Technology                        | Purpose                                      |
+| Component           | Technology                        | Function                                      |
 |---------------------|------------------------------------|----------------------------------------------|
 
 
