@@ -1,13 +1,15 @@
-# 🌾 Botni A.I – Smart Farming Assistant for India
+#  AlgoArena – Quiz Site for Technical Students
 
-Botni A.I is a modular, voice-first, offline-capable mobile app designed to empower Indian farmers with real-time support through AI and local NGOs. Built for Smart India Hackathon 2025, it bridges the gap between rural communities and smart technology.
+AlgoArena is a AI based Website which create quizes for students who are in Technical department such as AI/ML , CS , CE
+help them testing their knowledge and challege themself for examinations and genrnal knowledge
 
-The site is Mainly bradcasted on [Botni A.I.](https://bytecrafter.netlify.app/)
+The site is Mainly broadcasted on [AlogArena]()
 
 ## Frontend (Farmer-Facing App)
 
 | Component           | Technology                        | Function                                      |
 |---------------------|------------------------------------|----------------------------------------------|
+
 
 ## Backend (Routing, AI, Admin Portal)
 
@@ -18,11 +20,12 @@ The site is Mainly bradcasted on [Botni A.I.](https://bytecrafter.netlify.app/)
  
 ## Project Highlights
 
-- Voice-first interface for low-tech users
-- Offline-first architecture with smart caching
-- Real-time routing to AI or NGO responders
-- Admin portal for monitoring and control
-- Modular updates with minimal app size impact
+- 
 
+### Major Porjects IIMTU Diploma Students
 
-### Smart India Hackathon (SIH) Problem statement 25030
+# Developers
+- Bhavish Agrawal (Bhavish089)
+- Priyanshu Pushpam 
+- Ansh Singhal
+- Mizbual Haque
