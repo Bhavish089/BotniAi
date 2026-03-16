@@ -1,0 +1,14 @@
+# Packages
+/node_modules
+
+# Angular cache and build output
+/.angular
+/dist
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# System files
+.DS_Store
+Thumbs.db
