@@ -3,7 +3,7 @@
 AlgoArena is a AI based Website which create quizes for students who are in Technical department such as AI/ML , CS , CE
 help them testing their knowledge and challege themself for examinations and genrnal knowledge
 
-The site is Mainly broadcasted on [AlogArena]()
+The site is Mainly broadcasted on [AlogArena](https://bhavish089.github.io/AlgoArena/)
 
 ## Frontend (Farmer-Facing App)
 
