@@ -1,5 +1,5 @@
 # AlgoArena
-Currently Hosted on [AlgoArena](https//Bhavish089.github.io/AlgoArena.git)
+Currently Hosted on [AlgoArena](https//Bhavish089.github.io/AlgoArena)
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
 
