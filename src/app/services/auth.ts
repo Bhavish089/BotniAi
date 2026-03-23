@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   // Use HTTPS because GitHub Pages is secure
-  private apiUrl = 'https://algoarena.infinityfree.me/login_register.php';
+  private apiUrl = 'https://algoarena.infinityfree.me/?i=1';
 
   constructor(private http: HttpClient) {}
 
