@@ -1,11 +1,12 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http'; // ADD THIS
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes'; 
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZonelessChangeDetection(), // Parentheses here are correct!
     provideRouter(routes),
-    provideHttpClient() // ADD THIS
+    provideHttpClient()
   ]
 };

@@ -6,9 +6,18 @@
   <title>AlgoArena</title>
 </head>
 <body>
+  <header style="padding: 20px; border-bottom: 1px solid #333;">
   <h1>AlgoArena</h1>
   <p>by bhavish089</p>
-  <a href="/login">Login</a>
-  <router-outlet />
+  
+  <nav>
+    <a routerLink="/login" style="color: #0f0; margin-right: 15px;">Login</a>
+    <a routerLink="/dashboard" style="color: #0f0;">Dashboard</a>
+  </nav>
+</header>
+
+<main style="padding: 20px;">
+  <router-outlet></router-outlet>
+</main>
 </body>
 </html>
