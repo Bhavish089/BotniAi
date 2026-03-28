@@ -4,19 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AlgoArena</title>
+  <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <header style="padding: 20px; border-bottom: 1px solid #333;">
+<header>
   <h1>AlgoArena</h1>
   <p>by bhavish089</p>
-  
+
   <nav>
-    <a routerLink="/login" style="color: #0f0; margin-right: 15px;">Login</a>
-    <a routerLink="/dashboard" style="color: #0f0;">Dashboard</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/dashboard">Dashboard</a>
   </nav>
 </header>
 
-<main style="padding: 20px;">
+<main>
   <router-outlet></router-outlet>
 </main>
 </body>

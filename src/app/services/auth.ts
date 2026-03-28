@@ -1,37 +1,44 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private apiUrl = 'https://algoarena.infinityfree.me/login_register.php';
+  // Replace these with your actual keys from Supabase Dashboard -> Settings -> API
+  private supabase: SupabaseClient = createClient(
+    'https://your-project-id.supabase.co', 
+    'your-anon-public-key'
+  );
 
-  // 1. Add these Signals so the Dashboard can "see" the user
+  // These keep your UI in sync (Logged in vs Logged out)
   currentUser = signal<any>(null);
   isLoggedIn = signal<boolean>(false);
 
-  login(credentials: any) {
-    return this.http.post(this.apiUrl, { action: 'login', ...credentials }).pipe(
-      tap((response: any) => {
-        // 2. When login works, update the signals
-        if (response.success) {
-          this.currentUser.set(response.user);
-          this.isLoggedIn.set(true);
-        }
-      })
-    );
+  constructor() {}
+
+  async login(credentials: { email: string; pass: string }) {
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email: credentials.email,
+      password: credentials.pass,
+    });
+
+    if (error) return { success: false, message: error.message };
+
+    this.currentUser.set(data.user);
+    this.isLoggedIn.set(true);
+    return { success: true };
   }
 
-  logout() {
-    // 3. Clear the signals on logout
+  async register(email: string, pass: string) {
+    const { data, error } = await this.supabase.auth.signUp({ email, password: pass });
+    if (error) return { success: false, message: error.message };
+    return { success: true };
+  }
+
+  async logout() {
+    await this.supabase.auth.signOut();
     this.currentUser.set(null);
     this.isLoggedIn.set(false);
-  }
-
-  register(userData: any) {
-    return this.http.post(this.apiUrl, { action: 'register', ...userData });
   }
 }
