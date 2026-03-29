@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlgoArena</title>
-  <link rel="stylesheet" href="app.scss">
-</head>
-<body>
-<header>
-  <h1>AlgoArena</h1>
-  <p>by bhavish089</p>
+<div class="main-container">
+  @if (!auth.isLoggedIn()) {
+    <div class="login-box">
+      <h2>AlgoArena Login</h2>
+      <input #email type="email" placeholder="Email">
+      <input #pass type="password" placeholder="Password">
+      
+      <button (click)="auth.login({email: email.value, pass: pass.value})">Login</button>
+      <button (click)="auth.register(email.value, pass.value)">Sign Up</button>
+    </div>
+  } @else {
+    <div class="welcome-box">
+      <h1>Welcome to the Arena, {{ auth.currentUser()?.email }}</h1>
+      <button (click)="auth.logout()">Logout</button>
+    </div>
+  }
+</div>
 
-  <nav>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/dashboard">Dashboard</a>
-  </nav>
-</header>
-
-<main>
-  <router-outlet></router-outlet>
-</main>
-</body>
-</html>
+<router-outlet></router-outlet>

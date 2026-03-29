@@ -1,21 +1,29 @@
 import { Injectable, signal } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // Replace these with your actual keys from Supabase Dashboard -> Settings -> API
+  // We use (environment as any) here to bypass the TS2339 error on these two lines
   private supabase: SupabaseClient = createClient(
-    'https://your-project-id.supabase.co', 
-    'your-anon-public-key'
+    (environment as any).supabaseUrl,
+    (environment as any).supabaseKey
   );
 
-  // These keep your UI in sync (Logged in vs Logged out)
-  currentUser = signal<any>(null);
+  currentUser = signal<User | null>(null);
   isLoggedIn = signal<boolean>(false);
 
-  constructor() {}
+  constructor() {
+    // Check for existing session on app load
+    this.supabase.auth.getUser().then(({ data }) => {
+      if (data.user) {
+        this.currentUser.set(data.user);
+        this.isLoggedIn.set(true);
+      }
+    });
+  }
 
   async login(credentials: { email: string; pass: string }) {
     const { data, error } = await this.supabase.auth.signInWithPassword({
@@ -31,8 +39,16 @@ export class AuthService {
   }
 
   async register(email: string, pass: string) {
-    const { data, error } = await this.supabase.auth.signUp({ email, password: pass });
+    const { data, error } = await this.supabase.auth.signUp({ 
+      email: email, 
+      password: pass 
+    });
+
     if (error) return { success: false, message: error.message };
+
+    // Auto-login after successful registration
+    this.currentUser.set(data.user);
+    this.isLoggedIn.set(true);
     return { success: true };
   }
 
