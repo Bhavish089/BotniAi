@@ -1,1 +1,21 @@
-<p>dashboard works!</p>
+<div class="dashboard-wrapper">
+  <nav class="side-nav">
+    @if (userProfile()) {
+      <div class="profile-summary">
+        <span class="avatar">{{ userProfile()?.full_name?.charAt(0) }}</span>
+        <p>{{ userProfile()?.full_name }}</p>
+      </div>
+    }
+    <button (click)="logout()" class="btn-logout">Logout</button>
+  </nav>
+
+  <main class="content">
+    <h1>Your Dashboard</h1>
+    <div class="action-grid">
+      <div class="action-card primary" (click)="startNewQuiz()">
+        <h3>+ Create New Quiz</h3>
+        <p>Use AI to generate questions from specific topics.</p>
+      </div>
+    </div>
+  </main>
+</div>

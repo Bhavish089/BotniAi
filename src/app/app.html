@@ -1,19 +1,19 @@
-<div class="main-container">
-  @if (!auth.isLoggedIn()) {
-    <div class="login-box">
-      <h2>AlgoArena Login</h2>
-      <input #email type="email" placeholder="Email">
-      <input #pass type="password" placeholder="Password">
-      
-      <button (click)="auth.login({email: email.value, pass: pass.value})">Login</button>
-      <button (click)="auth.register(email.value, pass.value)">Sign Up</button>
-    </div>
-  } @else {
-    <div class="welcome-box">
-      <h1>Welcome to the Arena, {{ auth.currentUser()?.email }}</h1>
-      <button (click)="auth.logout()">Logout</button>
-    </div>
+<div class="app-container">
+  
+  @if (authService.isLoggedIn()) {
+    <nav class="main-nav">
+      <div class="logo">AlgoArena</div>
+      <div class="nav-links">
+        <a routerLink="/dashboard">Dashboard</a>
+        <span class="user-tag">
+          {{ authService.currentUser()?.full_name || 'User' }}
+        </span>
+      </div>
+    </nav>
   }
-</div>
 
-<router-outlet></router-outlet>
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

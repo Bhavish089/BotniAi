@@ -1,16 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common'; // MUST HAVE THIS
-import { AuthService } from './services/auth';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth'; // Ensure path is correct
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule], // ADD CommonModule HERE
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
 export class AppComponent {
-  title = signal('AlgoArena');
-  auth = inject(AuthService);
+  // Make this public so app.html can access it
+  public authService = inject(AuthService); 
 }
