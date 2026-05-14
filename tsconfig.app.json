@@ -4,7 +4,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "module": "ES2022",
+    "rootDir": "./",
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src/**/*.ts"
