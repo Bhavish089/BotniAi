@@ -1,0 +1,176 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    outline: none;
+    box-sizing: border-box;
+    scroll-behavior: smooth;    
+}
+
+#app_title_bar {
+   display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000;
+      padding: 0 10px;
+      height: 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      overflow: hidden;
+}
+
+#app_title_bar .title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: consolas;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-right: 47%;
+}
+
+#app_title_bar #controllers {
+    position: absolute;
+    right: 1%;
+    margin-left: 89%;
+    display: flex;
+    gap: 12px
+}
+
+#app_title_bar #controllers button {
+     width: 18px;
+     height: 18px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     cursor: pointer;
+     color: #0000;
+}
+
+#app_title_bar #controllers .close-btn span {
+    width: 10px;
+    height: 2px;
+    background: #f20;
+    position: absolute;
+    transition: .8s;
+}
+
+@keyframes rotator {
+
+}
+
+#app_title_bar #controllers .close-btn span:nth-child(1) {
+    transform: rotate(45deg);
+    transition: .8s;
+}
+
+#app_title_bar #controllers .close-btn span:nth-child(2) {
+    transform: rotate(135deg);
+    transition: .8s;
+}
+
+#app_title_bar #controllers .close-btn:hover span:nth-child(1) {
+    transform: rotate(215deg);
+    transition: .8s;
+}
+
+#app_title_bar #controllers .close-btn:hover span:nth-child(2) {
+    transform: rotate(-45deg);
+    transition: .8s;
+}
+
+#app_title_bar #controllers .mnbtn span {
+    width: 10px;
+    height: 2px;
+    background: #0af;
+    position: absolute;
+    transition: .8s;
+    translate: 0 2px;
+}
+
+#app_title_bar #controllers .mxbtn span {
+    width: 10px;
+    height: 10px;
+    border: 2px solid #0af;
+            border-radius: 20%;
+    position: absolute;
+    transition: .8s;
+}
+
+.usertunnel {
+    color: #fff;
+    display: flex;
+    font-family: consolas;
+    gap: 20px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.logger, .sinner {
+    transition: .7s;
+    cursor: pointer;
+}
+
+.logger:hover, .sinner:hover {
+        transition: .7s;
+    color: #f01;
+}
+
+/* Add this to app.scss or your global styles */
+.usertunnel {
+  position: relative;
+  
+  .active-user {
+    cursor: pointer;
+    &:hover h3 { color: #0f0; }
+  }
+
+  .profile-drawer {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #080808;
+    border: 1px solid #0f0;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    min-width: 150px;
+
+    button {
+      background: transparent;
+      border: 1px solid #333;
+      color: #f44;
+      width: 100%;
+      padding: 8px;
+      font-family: 'Consolas', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: uppercase;
+
+      &:hover {
+        background: #f44;
+        color: #000;
+        border-color: #f44;
+      }
+    }
+  }
+}
+
+.nav-context {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #0f0;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #0f0;
+  padding: 2px 10px;
+  border-radius: 2px;
+  opacity: 0.7;
+  
+  &:hover { opacity: 1; background: rgba(0, 255, 0, 0.1); }
+}

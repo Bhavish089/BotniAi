@@ -1,19 +1,44 @@
 <div class="app-container">
-  
-  @if (authService.isLoggedIn()) {
-    <nav class="main-nav">
-      <div class="logo">AlgoArena</div>
-      <div class="nav-links">
-        <a routerLink="/dashboard">Dashboard</a>
-        <span class="user-tag">
-          {{ authService.currentUser()?.full_name || 'User' }}
-        </span>
+  <div *ngIf="isDesktop" id="app_title_bar">
+
+    @if (!authService.isLoggedIn()) {
+    <div class="usertunnel">
+      <div class="logger" (click)="navigateToLogin()">
+        <h3>Login</h3>
       </div>
-    </nav>
-  }
+      <div class="sinner" (click)="navigateToSignup()">
+        <h3>Sign Up</h3>
+      </div>
+    </div>
+    } @else {
+    <div class="usertunnel">
+      <div class="logger active-user" (click)="isProfileOpen = !isProfileOpen">
+        <h3>{{ authService.currentUser()?.full_name || 'Admin' }}</h3>
+      </div>
+      @if (isProfileOpen) {
+      <div class="profile-drawer">
+        <button class="logout-btn" (click)="onLogout()">Terminate Session</button>
+      </div>
+      }
+    </div>
+
+    @if (router.url !== '/dashboard') {
+    <div class="nav-context-link" routerLink="/dashboard">
+      <span>&lt;</span> DASHBOARD
+    </div>
+    }
+    }
+
+    <div class="title" routerLink="/dashboard">AlgoArena</div>
+
+    <div id="controllers">
+      <button (click)="minimizeApp()" class="mnbtn"><span></span>.</button>
+      <button (click)="maximizeApp()" class="mxbtn"><span></span>.</button>
+      <button (click)="closeApp()" class="close-btn"><span></span><span></span>.</button>
+    </div>
+  </div>
 
   <main class="content-area">
     <router-outlet></router-outlet>
   </main>
-
 </div>

@@ -1,21 +1,35 @@
 <div class="dashboard-wrapper">
-  <nav class="side-nav">
-    @if (userProfile()) {
-      <div class="profile-summary">
-        <span class="avatar">{{ userProfile()?.full_name?.charAt(0) }}</span>
-        <p>{{ userProfile()?.full_name }}</p>
-      </div>
-    }
-    <button (click)="logout()" class="btn-logout">Logout</button>
-  </nav>
-
   <main class="content">
-    <h1>Your Dashboard</h1>
+    <header class="dash-header">
+      <h1>DashBoard</h1>
+    </header>
+    
     <div class="action-grid">
-      <div class="action-card primary" (click)="startNewQuiz()">
-        <h3>+ Create New Quiz</h3>
-        <p>Use AI to generate questions from specific topics.</p>
+      <div class="action-card primary" (click)="navigateToQuizMaker()">
+        <h3>GENERATE_QUIZ</h3>
+        <p>create a new quiz using keyword or syllabus</p>
+        <button class="dash-btn">Generate</button>
+      </div>
+
+      <div class="action-card group-quiz">
+        <h3>GROUP_QUIZZES</h3>
+        <p>Create a new group quiz with your friends</p>
+        <button class="dash-btn secondary">Generate</button>
       </div>
     </div>
+
+    <section class="live-sessions" *ngIf="sessionIds.length > 0">
+      <h2>ACTIVE_SESSIONS</h2>
+      <div class="session-list">
+        <div *ngFor="let id of sessionIds" class="session-item">
+          <div class="session-info" (click)="toggleStudentList(id)">
+            <span class="id-tag">ID: {{ id }}</span>
+            <span class="title">{{ localSessions[id].title }}</span>
+            <span class="count">{{ getStudentEntries(localSessions[id]).length }} ACTIVE</span>
+            <button class="end-btn" (click)="endExam(id); $event.stopPropagation()">STOP</button>
+          </div>
+          </div>
+      </div>
+    </section>
   </main>
 </div>

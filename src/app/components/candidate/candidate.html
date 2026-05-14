@@ -1,0 +1,28 @@
+    <div class="container">
+        <div id="login-view" class="card">
+            <h1>>> CANDIDATE_LOGIN</h1>
+            <input type="text" id="std-sid" placeholder="SESSION_ID (e.g. ALGO-1234)">
+            <input type="text" id="std-name" placeholder="YOUR_FULL_NAME">
+            <input type="password" id="std-pass" placeholder="ACCESS_PASSWORD">
+            <button class="primary-btn" onclick="joinSession()">INITIALIZE UPLINK</button>
+        </div>
+
+        <div id="exam-area" class="hidden">
+            <div class="card">
+                <h2 id="live-title">SESSION_ACTIVE</h2>
+                <div id="status-bar">
+                    UPLINK_STABLE | MONITORING_ACTIVE
+                </div>
+            </div>
+
+            <div id="questions-list"></div>
+
+            <div class="card">
+                <button class="primary-btn" onclick="submitExam()">FINALIZE & SUBMIT</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/student.js"></script>

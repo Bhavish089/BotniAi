@@ -1,0 +1,123 @@
+* {
+    transition: .7s;
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: consolas;
+}
+
+.auth-card {
+  border: 2px solid #111;
+  padding: 30px; // Slightly more padding for the longer form
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff; // Ensures the "border cut" effect works
+
+  &:hover {
+    box-shadow: 10px 10px 0px #111;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 30px;
+    text-transform: uppercase;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+
+    .btn-primary {
+      cursor: pointer;
+      background: #fff;
+      color: #111;
+      border: 2px solid #111;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-top: 15px;
+      padding: 12px 0;
+      width: 100%; // Matches input width
+      transition: .4s;
+
+      &:hover, &:focus {
+        background: #111;
+        color: #fff;
+        outline: none;
+      }
+    }
+  }
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+  width: 350px; // Fixed width to prevent drift
+  text-transform: uppercase;
+
+  input {
+    width: 100%;
+    padding: 12px; // Balanced padding
+    background: transparent;
+    border: 1.5px solid #111;
+    color: #111;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box; // Prevents padding from breaking width
+
+    &:focus {
+      background: #111;
+      color: #fff;
+    }
+  }
+
+  label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 14px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: #fff; // Masks the border behind it
+    padding: 0 5px;
+  }
+
+  /* The Floating Effect */
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 11px;
+    color: #111;
+    transform: translateY(-50%) scale(0.9);
+    border-left: 1.5px solid #111;
+    border-right: 1.5px solid #111;
+  }
+}
+
+.footer-text {
+  margin-top: 20px;
+  font-size: 14px;
+  
+  a {
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover { color: #f20; }
+  }
+}

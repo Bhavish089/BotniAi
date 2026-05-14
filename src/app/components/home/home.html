@@ -1,18 +1,57 @@
 <div class="home-container">
   <header class="hero-section">
-    <h1>AlgoArena</h1>
-    <p>The AI-Powered Technical Quiz Platform</p>
+    <h1 routerLink="/app">Welcome-to-AlgoArena</h1>
   </header>
-
-  <div class="action-cards">
-    <div class="card" (click)="navigateToLogin()">
-      <h3>Login</h3>
-      <p>Access your dashboard and resume your progress.</p>
+  <section class="homeinfo">
+    <h2>
+      Introduction
+      <div class="hr"></div>
+    </h2>
+    <p>
+      AlgoArena is a Artificial Intelligence powered Quiz Maker which allow you to create quizzes in seconds. It uses
+      advanced natural language processing techniques to generate questions and answers based on the content you
+      provide. Whether you're a teacher looking to create engaging quizzes for your students, or a business professional
+      seeking to assess knowledge in a fun and interactive way, AlgoArena has got you covered. With its user-friendly
+      interface and powerful AI capabilities, you can easily create customized quizzes that cater to your specific
+      needs. Say goodbye to the hassle of manual quiz creation.
+    </p>
+    <h2>How to use <div class="hr"></div>
+    </h2>
+    <p>
+      To get started with AlgoArena, simply sign up for an account and log in. Once you're in, you can create a new quiz
+      by providing the content you want to base your questions on. The AI will then generate a set of questions and
+      answers for you. You can customize the quiz by selecting different templates and adjusting the settings to suit
+      your preferences. After creating your quiz, you can share it with others or use it for your own purposes. It's
+      that easy!
+    </p>
+    <h2>Features <div class="hr"></div>
+    </h2>
+    <ul>
+      <li>AI-powered question generation</li>
+      <li>Light Weight</li>
+      <li>Real-time performance analytics</li>
+    </ul>
+    <ul>
+      <li>Multi-Language support</li>
+      <li>Customizable quiz templates</li>
+      <li>Easy to use</li>
+    </ul>
+  </section>
+  <footer>
+    <h2>Useful Links: </h2>
+    <ul>
+      <li>
+        <a (click)="openExternalLink('https://discord.com/users/745329068152717332')">Discord</a>
+      </li>
+      <li>
+        <a (click)="openExternalLink('https://github.com/Bhavish089')">GitHub</a>
+      </li>
+      <li>
+        <a (click)="openExternalLink('https://www.linkedin.com/in/bhavish-agrawal-497661214')">LinkedIn</a>
+      </li>
+    </ul>
+    <div class="glitch-wrapper">
+  <h1 class="glitch" data-text="Bhavish089" (click)="openExternalLink('https://github.com/Bhavish089/Bhavish089.github.io')">M17B30AQ98</h1>
     </div>
-
-    <div class="card" (click)="navigateToSignup()">
-      <h3>Sign Up</h3>
-      <p>Create a new account to start building quizzes.</p>
-    </div>
-  </div>
+  </footer>
 </div>

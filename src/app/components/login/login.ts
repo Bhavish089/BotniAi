@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-login',
   standalone: true,
-  // CRITICAL: All these must be here for the HTML to work
   imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
@@ -15,19 +14,21 @@ import { AuthService } from '../../services/auth';
 export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  isLoading = false;
 
-  // These variables MUST match the [(ngModel)] names in your HTML
   email = '';
   password = '';
 
   async onLogin() {
+    this.isLoading = true;
     const res = await this.authService.login(this.email, this.password);
     
     if (res.success) {
-      // Successful login leads directly to the dashboard
+      // The authService signal updates, which triggers the check in app.html
       this.router.navigate(['/dashboard']);
     } else {
       alert('Login failed: ' + res.message);
+      this.isLoading = false;
     }
   }
 }

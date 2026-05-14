@@ -1,0 +1,57 @@
+    <div class="container">
+        <div id="setup-view" class="card">
+            <h1>Create New Exam</h1>
+            <label for="exam-title">Exam Title</label>
+            <input type="text" id="exam-title" placeholder="e.g., Cybersecurity Basics">
+            
+            <label for="expiry-time">Expiration Date/Time</label>
+            <input type="datetime-local" id="expiry-time">
+
+            <label for="syllabus-input">Syllabus / Context</label>
+            <textarea id="syllabus-input" rows="4" placeholder="Paste topics here..."></textarea>
+            
+            <div id="indexsidetoolsbody">
+                <div  id="indexqcounter">
+                    <label for="question-count">Questions (Max 30)</label>
+                    <input type="number" id="question-count" value="5" min="1" max="30">
+                </div>
+                <div id="indexpasswordcontainer">
+                    <label for="exam-password">Access Password</label>
+                    <input type="password" id="exam-password" placeholder="Enter 6 digit Password">
+                </div>
+            </div>
+            <button class="primary-btn" onclick="generateExam()">✨ AI Generate Questions</button>
+        </div>
+
+        <div id="editor-view" class="card hidden">
+            <h2 id="editor-title-display">Edit Questions</h2>
+            <div id="edit-list"></div>
+            <button class="secondary-btn" onclick="addQuestion()">+ Add Manual Question</button>
+            <button class="primary-btn" onclick="showPreview()">👁️ Preview Exam</button>
+        </div>
+
+        <div id="preview-view" class="card hidden">
+            <div id="preview-content"></div>
+            <div id="index_preview_actions_container">
+                <button class="secondary-btn" onclick="backToEditor()">Edit More</button>
+                <button class="primary-btn" onclick="publishExam()">🚀 Publish & Go Live</button>
+            </div>
+        </div>
+
+        <div id="admin-view" class="hidden">
+            <h2>Live Sessions</h2>
+            <div id="active-sessions-list"></div>
+        </div>
+    </div>
+
+    <div id="review-modal" class="hidden">
+        <div class="container">
+            <div class="card">
+                <button onclick="document.getElementById('review-modal').classList.add('hidden')" class="secondary-btn">Close Review</button>
+                <div id="review-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/app.js"></script>
