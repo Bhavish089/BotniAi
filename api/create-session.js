@@ -1,6 +1,10 @@
-// api/create-session.js
-// In-memory store (resets on cold start — upgrade to DB later when ready)
-const activeSessions = global.activeSessions || (global.activeSessions = {});
+const { createClient } = require('@supabase/supabase-js');
+const { gzipSync } = require('zlib');
+
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+);
 
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).end();
@@ -11,25 +15,34 @@ module.exports = async function handler(req, res) {
     }
     if (!body) body = {};
 
-    const { title, description, questions, password, validityStart, 
-            expiryDateTime, submitTimeout, maxCandidates, dbVerify } = body;
+    const { title, description, questions, password, validityStart,
+            expiryDateTime, submitTimeout, maxCandidates, ownerToken } = body;
 
+    // Verify the user is an admin
+    const { data: { user }, error: authError } = await supabase.auth.getUser(ownerToken);
+    if (authError || !user) return res.status(401).json({ error: 'Unauthorized' });
+
+    const { data: profile } = await supabase
+        .from('profiles').select('role').eq('id', user.id).single();
+    if (profile?.role !== 'admin') return res.status(403).json({ error: 'Admins only' });
+
+    // Compress quiz data
+    const compressed = gzipSync(JSON.stringify({ questions })).toString('base64');
     const sessionId = 'ALGO-' + Math.floor(1000 + Math.random() * 9000);
 
-    activeSessions[sessionId] = {
+    const { error } = await supabase.from('sessions').insert({
+        id: sessionId,
+        owner_id: user.id,
         title,
         description,
-        questions,
         password,
-        validityStart,
+        validity_start: validityStart,
         expiry: expiryDateTime,
-        submitTimeout: submitTimeout || 60,
-        maxCandidates: parseInt(maxCandidates) || 50,
-        dbVerify: dbVerify || false,
-        createdAt: Date.now(),
-        students: {}
-    };
+        submit_timeout: submitTimeout || 60,
+        max_candidates: maxCandidates || 50,
+        data: compressed
+    });
 
-    console.log(`Session Created: ${sessionId}`);
+    if (error) return res.status(500).json({ error: error.message });
     res.json({ success: true, sessionId });
 };

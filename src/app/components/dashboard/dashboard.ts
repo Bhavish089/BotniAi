@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth'; 
 import { FormsModule } from '@angular/forms';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 // 1. DEFINE INTERFACES TO PREVENT 'UNKNOWN' ERRORS
 interface StudentLog {
@@ -43,24 +44,46 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public overrideValue: number = 0;
   private socket?: Socket;
 
-  ngOnInit() {
-    // Initialize socket connection
-    this.socket = io(); 
+async ngOnInit() {
+    if (environment.production) {
+        await this.loadSessionsFromSupabase();
+    } else {
+        // Dev mode — use Socket.IO as before
+        this.socket = io();
+        this.socket.on('admin-init', (sessions: any) => {
+            this.localSessions = { ...sessions };
+            Object.keys(this.localSessions).forEach(id => {
+                this.localSessions[id].isExpanded = false;
+            });
+            this.cdr.detectChanges();
+        });
+        this.socket.on('admin-update', ({ sessionId, session }: any) => {
+            const wasExpanded = this.localSessions[sessionId]?.isExpanded || false;
+            this.localSessions = { ...this.localSessions, [sessionId]: { ...session, isExpanded: wasExpanded } };
+            this.cdr.detectChanges();
+        });
+    }
+}
 
-    this.socket.on('admin-init', (sessions: { [key: string]: ExamSession }) => {
-      this.localSessions = { ...sessions };
-      Object.keys(this.localSessions).forEach(id => {
-        this.localSessions[id].isExpanded = false;
-      });
-      this.cdr.detectChanges();
-    });
+async loadSessionsFromSupabase() {
+    const token = await this.authService.getAccessToken();
+    if (!token) return;
 
-    this.socket.on('admin-update', ({ sessionId, session }: { sessionId: string, session: ExamSession }) => {
-      const wasExpanded = this.localSessions[sessionId]?.isExpanded || false;
-      this.localSessions = { ...this.localSessions, [sessionId]: { ...session, isExpanded: wasExpanded } };
-      this.cdr.detectChanges();
+    const res = await fetch('/get-sessions', {
+        headers: { 'Authorization': `Bearer ${token}` }
     });
-  }
+    const { sessions } = await res.json();
+
+    this.localSessions = {};
+    (sessions || []).forEach((s: any) => {
+        this.localSessions[s.id] = {
+            title: s.title,
+            isExpanded: false,
+            students: {}
+        };
+    });
+    this.cdr.detectChanges();
+}
 
   // --- SESSION ACTIONS ---
   toggleStudentList(id: string) {

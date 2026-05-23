@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { io, Socket } from 'socket.io-client';
+import { AuthService } from '../../services/auth';
+import { environment } from '../../../environments/environment';
 
 interface QuizQuestion {
   type: 'MCQ' | 'TF' | 'Short';
@@ -20,13 +22,14 @@ interface QuizQuestion {
 })
 export class Examgen implements OnInit {
   private router = inject(Router);
+  private authService = inject(AuthService);
   currentView: 'setup' | 'editor' | 'preview' = 'setup';
 
   examTitle = '';
   examDescription = '';
   syllabusInput = '';
   questionCount = 5;
-  submitTimeout = 30;  // minutes
+  submitTimeout = 30;
   examPassword = '';
   validityStart = '';
   validityEnd = '';
@@ -56,7 +59,9 @@ export class Examgen implements OnInit {
   }
 
   ngOnInit() {
-    this.socket = io();
+    if (!environment.production) {
+      this.socket = io();
+    }
   }
 
   async generateQuiz() {
@@ -69,8 +74,8 @@ export class Examgen implements OnInit {
     this.isGenerating = true;
 
     try {
-const response = await fetch('/generate', {
-  method: 'POST',
+      const response = await fetch('/generate', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ syllabus: this.syllabusInput, count: this.questionCount })
       });
@@ -132,19 +137,11 @@ const response = await fetch('/generate', {
     this.questions[index].correctAnswer = value;
   }
 
-  goToPreview() {
-    this.currentView = 'preview';
-  }
+  goToPreview() { this.currentView = 'preview'; }
+  backToSetup() { this.currentView = 'setup'; }
+  backToEditor() { this.currentView = 'editor'; }
 
-  backToSetup() {
-    this.currentView = 'setup';
-  }
-
-  backToEditor() {
-    this.currentView = 'editor';
-  }
-
-async publishQuiz() {
+  async publishQuiz() {
     if (this.questions.length === 0) {
       this.message = 'Add at least one question before publishing.';
       return;
@@ -154,7 +151,8 @@ async publishQuiz() {
     this.message = '';
 
     try {
-      // Send all the captured form data to the backend
+      const token = await this.authService.getAccessToken();
+
       const response = await fetch('/create-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -162,17 +160,17 @@ async publishQuiz() {
           title: this.examTitle,
           description: this.examDescription,
           validityStart: this.validityStart,
-          expiryDateTime: this.validityEnd, // Mapped from validityEnd
+          expiryDateTime: this.validityEnd,
           submitTimeout: this.submitTimeout,
           password: this.examPassword,
           questions: this.questions,
           maxCandidates: 50,
-          dbVerify: false
+          ownerToken: token
         })
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         this.resetForm();
         this.message = `Quiz published! Session ID: ${result.sessionId}`;
@@ -187,4 +185,4 @@ async publishQuiz() {
       this.isPublishing = false;
     }
   }
-}
+} 

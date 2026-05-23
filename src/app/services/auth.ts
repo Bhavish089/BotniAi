@@ -10,6 +10,15 @@ export class AuthService {
   currentUser = signal<any>(null);
   isLoggedIn = computed(() => !!this.currentUser());
 
+  getSupabase() {
+    return this.supabase;
+  }
+
+  async getAccessToken(): Promise<string | null> {
+    const { data } = await this.supabase.auth.getSession();
+    return data.session?.access_token || null;
+  }
+
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
