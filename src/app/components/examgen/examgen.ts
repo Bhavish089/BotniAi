@@ -184,5 +184,8 @@ export class Examgen implements OnInit {
     } finally {
       this.isPublishing = false;
     }
+
+    const token = await this.authService.getAccessToken();
+    console.log('Token:', token ? 'EXISTS - ' + token.substring(0, 20) : 'NULL');
   }
 } 
