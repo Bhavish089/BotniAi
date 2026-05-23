@@ -20,8 +20,17 @@ export class AuthService {
   }
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
+    this.supabase = createClient(
+    environment.supabaseUrl, 
+    environment.supabaseKey,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+        }
+    }
+  );  
+}
 
   async register(email: string, password: string, fullName: string, phone: string, role: string) {
     // Step 1: Create Auth User
