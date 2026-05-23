@@ -5,6 +5,8 @@
         { "source": "/generate", "destination": "/api/generate" },
         { "source": "/create-session", "destination": "/api/create-session" },
         { "source": "/get-sessions", "destination": "/api/get-sessions" },
+        { "source": "/join-session", "destination": "/api/join-session" },
+        { "source": "/submit-exam", "destination": "/api/submit-exam" },
         { "source": "/(.*)", "destination": "/index.html" }
     ]
 }
