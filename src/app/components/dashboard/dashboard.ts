@@ -47,8 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 async ngOnInit() {
     if (environment.production) {
         await this.loadSessionsFromSupabase();
+        // Poll every 10s for new submissions
+        setInterval(() => this.loadSessionsFromSupabase(), 10000);
     } else {
-        // Dev mode — use Socket.IO as before
         this.socket = io();
         this.socket.on('admin-init', (sessions: any) => {
             this.localSessions = { ...sessions };
@@ -75,13 +76,29 @@ async loadSessionsFromSupabase() {
     const { sessions } = await res.json();
 
     this.localSessions = {};
-    (sessions || []).forEach((s: any) => {
+    for (const s of (sessions || [])) {
+        // fetch submission count for each session
+        const subRes = await fetch(`/get-submissions?sessionId=${s.id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const subData = await subRes.json();
+        const students: any = {};
+        (subData.submissions || []).forEach((sub: any) => {
+            students[sub.candidate_id] = {
+                name: sub.candidate_email || sub.candidate_id.substring(0, 8),
+                score: sub.score,
+                online: false,
+                answers: sub.answers
+            };
+        });
+
         this.localSessions[s.id] = {
             title: s.title,
             isExpanded: false,
-            students: {}
+            students,
+            questions: s.questions || []
         };
-    });
+    }
     this.cdr.detectChanges();
 }
 

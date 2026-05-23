@@ -3,16 +3,25 @@
     scroll-behavior: smooth;
 }
 
+// --- WRAPPER — centers the box and prevents layout jump ---
+.dashboard-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 60px 20px 40px;
+    box-sizing: border-box;
+}
+
 .content {
     background: #fff;
     border: 2px solid #111;
     text-align: center;
-    position: relative;
-    top: 30vh;
-    margin: 0 auto;
     width: 80%;
+    max-width: 960px;
     padding: 20px 30px;
     transition: .7s;
+    // removed `top: 30vh` and `position: relative` — wrapper handles centering now
 }
 
 .content:hover {
@@ -104,6 +113,11 @@
     margin-bottom: 15px;
 }
 
+// Prevents layout jump when sessions expand/collapse
+.session-list {
+    min-height: 60px;
+}
+
 .session-item {
     border: 2px solid #111;
     margin-bottom: 15px;
@@ -167,6 +181,7 @@
 
 .student-list {
     border-top: 2px solid #111;
+    min-height: 48px; // prevents jump when list opens
 }
 
 .no-candidates {
