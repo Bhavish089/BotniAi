@@ -1,6 +1,6 @@
 {
     "buildCommand": "npm run build",
-    "outputDirectory": "dist/algo-arena-master/browser",
+    "outputDirectory": "dist/algo-arena-master",
     "rewrites": [
         { "source": "/generate", "destination": "/api/generate" },
         { "source": "/create-session", "destination": "/api/create-session" },
