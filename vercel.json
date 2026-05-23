@@ -1,0 +1,9 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist/algo-arena-master/browser",
+    "rewrites": [
+        { "source": "/generate", "destination": "/api/generate" },
+        { "source": "/create-session", "destination": "/api/create-session" },
+        { "source": "/(.*)", "destination": "/index.html" }
+    ]
+}
