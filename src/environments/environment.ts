@@ -4,8 +4,9 @@ export interface Environment {
   supabaseKey: string;
 }
 
-export const environment: Environment = {
-  production: false,
-  supabaseUrl: 'https://uprrqkvktslztmaonpwm.supabase.co',
-  supabaseKey: 'sb_publishable_BnoGrsWezIzrrx__vH_mjA_ACcRS7VQ'
+export const environment = {
+    production: true,
+    useSocket: false,
+    supabaseUrl: 'https://uprrqkvktslztmaonpwm.supabase.co',
+    supabaseKey: 'sb_publishable_BnoGrsWezIzrrx__vH_mjA_ACcRS7VQ'
 };

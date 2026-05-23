@@ -18,19 +18,30 @@ module.exports = async function handler(req, res) {
     const { title, description, questions, password, validityStart,
             expiryDateTime, submitTimeout, maxCandidates, ownerToken } = body;
 
-    // Verify the user is an admin
+    // Verify user with token
     const { data: { user }, error: authError } = await supabase.auth.getUser(ownerToken);
-    if (authError || !user) return res.status(401).json({ error: 'Unauthorized' });
+    if (authError || !user) {
+        console.error('Auth error:', authError?.message);
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
 
-    const { data: profile } = await supabase
-        .from('profiles').select('role').eq('id', user.id).single();
-    if (profile?.role !== 'admin') return res.status(403).json({ error: 'Admins only' });
+    // Check admin role
+    const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
 
-    // Compress quiz data
+    console.log('Profile:', profile, 'Error:', profileError?.message);
+
+    if (!profile || profile.role !== 'admin') {
+        return res.status(403).json({ error: 'Admins only' });
+    }
+
     const compressed = gzipSync(JSON.stringify({ questions })).toString('base64');
     const sessionId = 'ALGO-' + Math.floor(1000 + Math.random() * 9000);
 
-    const { error } = await supabase.from('sessions').insert({
+    const { error: insertError } = await supabase.from('sessions').insert({
         id: sessionId,
         owner_id: user.id,
         title,
@@ -43,6 +54,10 @@ module.exports = async function handler(req, res) {
         data: compressed
     });
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (insertError) {
+        console.error('Insert error:', insertError.message);
+        return res.status(500).json({ error: insertError.message });
+    }
+
     res.json({ success: true, sessionId });
 };
