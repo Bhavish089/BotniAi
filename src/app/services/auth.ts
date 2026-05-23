@@ -32,28 +32,23 @@ export class AuthService {
   );  
 }
 
-  async register(email: string, password: string, fullName: string, phone: string, role: string) {
-    // Step 1: Create Auth User
+ async register(email: string, password: string, fullName: string, phone: string, role: string) {
     const { data, error } = await this.supabase.auth.signUp({ email, password });
-    
     if (error) return { success: false, message: error.message };
 
-    // Step 2: Insert Profile (Now protected by the new RLS policy)
     if (data.user) {
-      const { error: dbError } = await this.supabase
-        .from('profiles')
-        .insert([{ 
-          id: data.user.id, 
-          full_name: fullName, 
-          email: email,
-          phone: phone, 
-          role: role 
-        }]);
-      
-      if (dbError) return { success: false, message: dbError.message };
+        const { error: dbError } = await this.supabase
+            .from('profiles')
+            .insert([{
+                id: data.user.id,
+                email: email,
+                role: 'candidate'
+                // no full_name — column doesn't exist
+            }]);
+        if (dbError) return { success: false, message: dbError.message };
     }
     return { success: true };
-  }
+}
 
   async login(email: string, password: string) {
     const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
