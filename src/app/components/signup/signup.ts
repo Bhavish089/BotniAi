@@ -20,18 +20,17 @@ export class SignupComponent {
   password = '';
   phone = '';
 
-  async onSignup() {
+async onSignup() {
     const res = await this.authService.register(
-      this.email, 
-      this.password, 
-      this.fullName, 
-      this.phone, 
-      'Personal'
+        this.email,
+        this.password,
+        this.fullName,
+        this.phone,
+        'candidate'  // ← was 'Personal'
     );
     if (res.success) {
-      this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
     } else {
-      alert(res.message);
+        alert(res.message);
     }
-  }
-}
+}}
