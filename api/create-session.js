@@ -1,11 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const { gzipSync } = require('zlib');
 
-const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY
-);
-
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).end();
 
@@ -18,30 +13,46 @@ module.exports = async function handler(req, res) {
     const { title, description, questions, password, validityStart,
             expiryDateTime, submitTimeout, maxCandidates, ownerToken } = body;
 
-    // Verify user with token
-    const { data: { user }, error: authError } = await supabase.auth.getUser(ownerToken);
-    if (authError || !user) {
-        console.error('Auth error:', authError?.message);
-        return res.status(401).json({ error: 'Unauthorized' });
-    }
+    if (!ownerToken) return res.status(401).json({ error: 'No token provided' });
 
-    // Check admin role
-    const { data: profile, error: profileError } = await supabase
+    // Create a client with the USER's token to verify identity
+    const userClient = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_KEY,
+        {
+            global: {
+                headers: { Authorization: `Bearer ${ownerToken}` }
+            }
+        }
+    );
+
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    console.log('User:', user?.id, 'AuthError:', authError?.message);
+
+    if (authError || !user) return res.status(401).json({ error: 'Unauthorized' });
+
+    // Check admin role using service client (bypasses RLS)
+    const serviceClient = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_KEY
+    );
+
+    const { data: profile, error: profileError } = await serviceClient
         .from('profiles')
         .select('role')
         .eq('id', user.id)
         .single();
 
-    console.log('Profile:', profile, 'Error:', profileError?.message);
+    console.log('Profile:', JSON.stringify(profile), 'ProfileError:', profileError?.message);
 
     if (!profile || profile.role !== 'admin') {
-        return res.status(403).json({ error: 'Admins only' });
+        return res.status(403).json({ error: 'Admins only', profile, profileError: profileError?.message });
     }
 
     const compressed = gzipSync(JSON.stringify({ questions })).toString('base64');
     const sessionId = 'ALGO-' + Math.floor(1000 + Math.random() * 9000);
 
-    const { error: insertError } = await supabase.from('sessions').insert({
+    const { error: insertError } = await serviceClient.from('sessions').insert({
         id: sessionId,
         owner_id: user.id,
         title,
