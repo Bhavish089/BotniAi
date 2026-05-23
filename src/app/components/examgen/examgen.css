@@ -1,0 +1,153 @@
+:host {
+  display: block;
+  padding: 20px;
+}
+
+.container {
+  max-width: 980px;
+  margin: 40px auto;
+}
+
+.card {
+  border: 2px solid #111;
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  margin: 0 0 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border: 1px solid #111;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #111;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field-item {
+  min-width: 0;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.primary-btn,
+.secondary-btn {
+  cursor: pointer;
+  padding: 12px 20px;
+  border: 2px solid #111;
+  border-radius: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.primary-btn {
+  background: #111;
+  color: #fff;
+}
+
+.primary-btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #111;
+}
+
+.question-card {
+  border: 1px solid #ddd;
+  padding: 18px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.small {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+.options-block {
+  margin-top: 14px;
+}
+
+.option-item {
+  margin-top: 10px;
+}
+
+.option-item input {
+  width: 100%;
+}
+
+.preview-card {
+  border: 1px dashed #ccc;
+  padding: 16px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  background: #fcfcfc;
+}
+
+.correct-answer {
+  margin-top: 12px;
+  color: #0f6;
+  font-weight: 700;
+}
+
+.message {
+  margin-top: 16px;
+  color: #b33;
+}
+
+.empty-state {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px dashed #bbb;
+  color: #555;
+  background: #fafafa;
+}
+

@@ -48,6 +48,22 @@ section.homeinfo p {
   // background: #44f;
 }
 
+section.homeinfo p span {
+  color: #111;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0px #005ac7,
+  -2px -2px 0px #ff00c1;
+  transition: .7s;
+  cursor: pointer;
+}
+
+section.homeinfo p span:hover {
+  text-shadow: .5px .5px 0px #005ac7,
+  -.5px -.5px 0px #ff00c1;
+  transition: .7s;
+}
+
 section.homeinfo ul {
   list-style: none;
   display: flex;

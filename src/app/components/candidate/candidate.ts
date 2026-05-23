@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { io } from 'socket.io-client';
+import { Router } from '@angular/router';
+import { io, Socket } from 'socket.io-client';
 
 @Component({
   selector: 'app-candidate',
@@ -11,92 +12,122 @@ import { io } from 'socket.io-client';
   styleUrls: ['./candidate.css']
 })
 export class CandidateComponent implements OnInit, OnDestroy {
-  // Credentials
-  public sessionId: string = '';
-  public studentName: string = '';
-  public password: string = '';
+  private router = inject(Router);
+  public sessionId = '';
+  public studentName = '';
+  public password = '';
 
-  // State
-  public isJoined: boolean = false;
-  public isSubmitted: boolean = false;
+  public isJoined = false;
+  public isSubmitted = false;
   public questions: any[] = [];
-  public studentAnswers: { [key: number]: any } = {};
-  
-  // Metrics
-  private startTime: number = 0;
-  private charCount: number = 0;
-  private socket: any;
+  public studentAnswers: string[] = [];
+  public timerDisplay = '00:00:00';
+  public joinError = '';
+  public submitTimeout = 60;  // minutes
+
+  private startTime = 0;
+  private charCount = 0;
+  private socket?: Socket;
+  private timerInterval: any;
 
   ngOnInit() {
-    this.socket = io(); // Connect to server
+    this.socket = io();
 
-    // Listen for Exam Data
     this.socket.on('session-data', (data: any) => {
       this.startTime = Date.now();
-      this.questions = data.questions;
+      this.questions = data.questions || [];
+      this.submitTimeout = data.submitTimeout || 60;
+      this.studentAnswers = new Array(this.questions.length).fill('');
       this.isJoined = true;
+      this.joinError = '';
+      this.startTimer();
     });
 
-    // Handle session errors (e.g., wrong password)
-    this.socket.on('error', (msg: string) => {
+    this.socket.on('join-error', (msg: string) => {
+      this.joinError = msg;
       alert(msg);
     });
-  }
 
-  // --- CORE METHODS ---
+    this.socket.on('submission-confirmed', (result: any) => {
+      this.isSubmitted = true;
+      alert(`Submission confirmed. Score: ${result.score}`);
+      this.router.navigate(['/dashboard']);
+    });
+  }
 
   joinSession() {
-    if (!this.sessionId || !this.studentName || !this.password) {
-      return alert("MISSING_CREDENTIALS");
+    if (!this.sessionId || !this.studentName) {
+      alert('Please enter the session ID and your name.');
+      return;
     }
 
-    // Name Validation: Required Full Name
     if (!/^[a-zA-Z]{2,}(?: [a-zA-Z]+){1,}$/.test(this.studentName)) {
-      return alert("SECURITY_ERROR: Full Name Required.");    
+      alert('Please enter a valid full name.');
+      return;
     }
 
-    this.socket.emit('join-session', { 
-      sessionId: this.sessionId, 
-      password: this.password, 
-      name: this.studentName 
+    this.socket?.emit('join-session', {
+      sessionId: this.sessionId,
+      password: this.password,
+      name: this.studentName
     });
   }
 
-  handleInput(index: number, value: any) {
-    this.studentAnswers[index] = value;
-    
-    // Logic to calculate character count for WPM metrics
-    let totalChars = 0;
-    Object.values(this.studentAnswers).forEach(val => {
-      if (typeof val === 'string') totalChars += val.length;
-    });
-    this.charCount = totalChars;
+  updateAnswer(index: number, value: string) {
+    this.studentAnswers[index] = value ?? '';
+    this.charCount = this.studentAnswers.reduce((sum, current) => sum + (current?.length || 0), 0);
   }
 
   submitExam() {
-    if (!confirm("CONFIRM_FINAL_SUBMISSION?")) return
+    if (!confirm('Submit your quiz now?')) {
+      return;
+    }
 
     const timeTaken = (Date.now() - this.startTime) / 1000;
     const wpm = Math.round((this.charCount / 5) / (timeTaken / 60));
 
-    this.socket.emit('submit-exam', {
+    this.socket?.emit('submit-exam', {
       sessionId: this.sessionId,
       answers: this.studentAnswers,
       metrics: { wpm, timeTaken }
     });
 
-    this.isSubmitted = true;
+    clearInterval(this.timerInterval);
   }
 
-  // --- SECURITY: Tab Switch Detection ---
+  private startTimer() {
+    const totalMs = this.submitTimeout * 60 * 1000;
+    const startTime = Date.now();
+    clearInterval(this.timerInterval);
+    this.timerInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = totalMs - elapsed;
+
+      if (remaining <= 0) {
+        clearInterval(this.timerInterval);
+        this.timerDisplay = '00:00:00';
+        this.submitExam();
+        return;
+      }
+
+      const hours = Math.floor(remaining / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+      this.timerDisplay = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }, 1000);
+  }
+
   @HostListener('document:visibilitychange', [])
   onVisibilityChange() {
     if (document.hidden && this.isJoined && !this.isSubmitted) {
-      this.socket.emit('tab-switch', { sessionId: this.sessionId });
+      this.socket?.emit('tab-switch', { sessionId: this.sessionId });
     }
   }
 
   ngOnDestroy() {
-    if (this.socket) this.socket.disconnect();
+    clearInterval(this.timerInterval);
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   }
 }

@@ -1,57 +1,115 @@
-    <div class="container">
-        <div id="setup-view" class="card">
-            <h1>Create New Exam</h1>
-            <label for="exam-title">Exam Title</label>
-            <input type="text" id="exam-title" placeholder="e.g., Cybersecurity Basics">
-            
-            <label for="expiry-time">Expiration Date/Time</label>
-            <input type="datetime-local" id="expiry-time">
+<div class="container">
+  <div *ngIf="currentView === 'setup'" class="card">
+    <h1>Create New Quiz</h1>
 
-            <label for="syllabus-input">Syllabus / Context</label>
-            <textarea id="syllabus-input" rows="4" placeholder="Paste topics here..."></textarea>
-            
-            <div id="indexsidetoolsbody">
-                <div  id="indexqcounter">
-                    <label for="question-count">Questions (Max 30)</label>
-                    <input type="number" id="question-count" value="5" min="1" max="30">
-                </div>
-                <div id="indexpasswordcontainer">
-                    <label for="exam-password">Access Password</label>
-                    <input type="password" id="exam-password" placeholder="Enter 6 digit Password">
-                </div>
-            </div>
-            <button class="primary-btn" onclick="generateExam()">✨ AI Generate Questions</button>
-        </div>
+    <label>Quiz Title</label>
+    <input type="text" [(ngModel)]="examTitle" placeholder="e.g., JavaScript Fundamentals" />
 
-        <div id="editor-view" class="card hidden">
-            <h2 id="editor-title-display">Edit Questions</h2>
-            <div id="edit-list"></div>
-            <button class="secondary-btn" onclick="addQuestion()">+ Add Manual Question</button>
-            <button class="primary-btn" onclick="showPreview()">👁️ Preview Exam</button>
-        </div>
+    <label>Description</label>
+    <textarea rows="3" [(ngModel)]="examDescription" placeholder="Quiz description"></textarea>
 
-        <div id="preview-view" class="card hidden">
-            <div id="preview-content"></div>
-            <div id="index_preview_actions_container">
-                <button class="secondary-btn" onclick="backToEditor()">Edit More</button>
-                <button class="primary-btn" onclick="publishExam()">🚀 Publish & Go Live</button>
-            </div>
-        </div>
-
-        <div id="admin-view" class="hidden">
-            <h2>Live Sessions</h2>
-            <div id="active-sessions-list"></div>
-        </div>
+    <div class="field-row">
+      <div class="field-item">
+        <label for="validityStart">Valid From</label>
+        <input id="validityStart" type="datetime-local" [(ngModel)]="validityStart" title="Quiz valid from date and time" placeholder="Start date and time" />
+      </div>
+      <div class="field-item">
+        <label for="validityEnd">Valid Until</label>
+        <input id="validityEnd" type="datetime-local" [(ngModel)]="validityEnd" title="Quiz valid until date and time" placeholder="End date and time" />
+      </div>
     </div>
 
-    <div id="review-modal" class="hidden">
-        <div class="container">
-            <div class="card">
-                <button onclick="document.getElementById('review-modal').classList.add('hidden')" class="secondary-btn">Close Review</button>
-                <div id="review-content"></div>
-            </div>
-        </div>
+    <div class="field-row">
+      <div class="field-item">
+        <label for="submitTimeout">Submission Timeout (mins)</label>
+        <input id="submitTimeout" type="number" min="1" max="1440" [(ngModel)]="submitTimeout" title="Number of minutes before submission timeout" placeholder="e.g. 30" />
+      </div>
+      <div class="field-item">
+        <label for="examPassword">Access Password</label>
+        <input id="examPassword" type="password" [(ngModel)]="examPassword" title="Optional access password" placeholder="Optional" />
+      </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/app.js"></script>
+    <label>Syllabus / Topics</label>
+    <textarea rows="4" [(ngModel)]="syllabusInput" placeholder="Paste topics or syllabus here"></textarea>
+
+    <label for="questionCount">Question Count</label>
+    <input id="questionCount" type="number" min="1" max="30" [(ngModel)]="questionCount" title="Number of questions to generate" placeholder="Number of questions" />
+
+    <div class="actions-row">
+      <button class="secondary-btn" (click)="resetForm()">Reset</button>
+      <button class="primary-btn" (click)="generateQuiz()" [disabled]="isGenerating">{{ isGenerating ? 'Generating…' : '✨ AI Generate Questions' }}</button>
+    </div>
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </div>
+
+  <div *ngIf="currentView === 'editor'" class="card">
+    <h1>Edit Questions</h1>
+    <div *ngIf="questions.length === 0" class="empty-state">
+      No questions generated yet. Add a manual question to start.
+    </div>
+
+    <div class="question-card" *ngFor="let question of questions; let i = index">
+      <div class="question-header">
+        <strong>Question {{ i + 1 }}</strong>
+        <button class="secondary-btn small" (click)="removeQuestion(i)">Delete</button>
+      </div>
+
+      <label for="questionType-{{ i }}">Type</label>
+      <select id="questionType-{{ i }}" title="Question type selector" [(ngModel)]="question.type" (ngModelChange)="updateQuestionType(i, $event)">
+        <option value="MCQ">Multiple Choice</option>
+        <option value="TF">True / False</option>
+        <option value="Short">Short Answer</option>
+      </select>
+
+      <label for="questionText-{{ i }}">Question Text</label>
+      <textarea id="questionText-{{ i }}" rows="2" [(ngModel)]="question.text" (ngModelChange)="updateQuestionText(i, $event)" placeholder="Enter question prompt"></textarea>
+
+      <div *ngIf="question.type !== 'Short'" class="options-block">
+        <label>Options</label>
+        <div *ngFor="let option of question.options; let j = index" class="option-item">
+          <input type="text" [(ngModel)]="question.options[j]" (ngModelChange)="updateQuestionOption(i, j, $event)" placeholder="Option {{ j + 1 }}" />
+        </div>
+      </div>
+
+      <label>Correct Answer</label>
+      <input type="text" [(ngModel)]="question.correctAnswer" (ngModelChange)="updateCorrectAnswer(i, $event)" placeholder="Correct answer" />
+    </div>
+
+    <div class="actions-row">
+      <button class="secondary-btn" (click)="addQuestion()">+ Add Question</button>
+      <button class="secondary-btn" (click)="backToSetup()">Back</button>
+      <button class="primary-btn" (click)="goToPreview()" [disabled]="questions.length === 0">Preview Quiz</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'preview'" class="card">
+    <h1>Preview Quiz</h1>
+    <div class="preview-card">
+      <h2>{{ examTitle }}</h2>
+      <p>{{ examDescription }}</p>
+      <p><strong>Valid:</strong> {{ validityStart }} → {{ validityEnd }}</p>
+      <p><strong>Timeout:</strong> {{ submitTimeout }} hour(s)</p>
+      <p><strong>Password:</strong> {{ examPassword || 'None' }}</p>
+    </div>
+
+    <div class="question-card" *ngFor="let question of questions; let i = index">
+      <h3>Q{{ i + 1 }}: {{ question.text }}</h3>
+      <div *ngIf="question.type === 'Short'">
+        <textarea rows="3" disabled placeholder="Short answer expected"></textarea>
+      </div>
+      <div *ngIf="question.type !== 'Short'" class="options-block">
+        <div *ngFor="let option of question.options" class="option-item">
+          <label><input type="radio" disabled /> {{ option || 'Option' }}</label>
+        </div>
+      </div>
+      <p class="correct-answer">Correct: {{ question.correctAnswer || 'None' }}</p>
+    </div>
+
+    <div class="actions-row">
+      <button class="secondary-btn" (click)="backToEditor()">Edit</button>
+      <button class="primary-btn" (click)="publishQuiz()" [disabled]="isPublishing">{{ isPublishing ? 'Publishing…' : 'Publish Quiz' }}</button>
+    </div>
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </div>
+</div>

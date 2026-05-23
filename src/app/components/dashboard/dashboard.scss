@@ -22,13 +22,12 @@
     -10px -10px 0 #111;
 }
 
-
 .content header {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
     letter-spacing: 2px;
-    // background: #ef0;
     margin-top: -10px;
     transition: .7s;
 }
@@ -38,11 +37,10 @@
     letter-spacing: 6px;
 }
 
-.action-grid{
+.action-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    // background: #eb0;
     transition: .7s;
 }
 
@@ -79,4 +77,270 @@
 .action-grid .action-card .dash-btn:hover {
     background: #111;
     color: #fff;
+}
+
+// --- HEADER ---
+
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-btn {
+    margin-top: 0;
+    padding: 8px 20px;
+}
+
+// --- SESSIONS ---
+
+.live-sessions {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.section-title {
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.session-item {
+    border: 2px solid #111;
+    margin-bottom: 15px;
+}
+
+.session-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    background: #f9f9f9;
+}
+
+.session-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.id-tag {
+    font-weight: bold;
+}
+
+.session-title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.session-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.count {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.end-btn {
+    padding: 6px 14px;
+    border: 2px solid red;
+    background: #fff;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover {
+        background: red;
+        color: #fff;
+    }
+}
+
+.chevron {
+    font-size: 0.8rem;
+}
+
+// --- STUDENT LIST ---
+
+.student-list {
+    border-top: 2px solid #111;
+}
+
+.no-candidates {
+    padding: 15px;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.student-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.student-name {
+    font-weight: bold;
+}
+
+.student-score {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.offline-badge {
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+.logs-btn {
+    padding: 5px 14px;
+    border: 2px solid #111;
+    background: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+
+    &:hover {
+        background: #111;
+        color: #fff;
+    }
+}
+
+// --- EMPTY STATE ---
+
+.empty-state {
+    margin-top: 30px;
+    padding: 30px;
+    border: 2px dashed #ccc;
+    text-align: center;
+    color: #aaa;
+}
+
+// --- MODAL ---
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #fff;
+    border: 2px solid #111;
+    padding: 30px;
+    width: 380px;
+    box-shadow: 8px 8px 0 #111;
+}
+
+.modal-box--wide {
+    width: 620px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.log-item {
+    padding: 12px;
+    border-left: 4px solid #ccc;
+    background: #fafafa;
+}
+
+.log-item--correct {
+    border-left-color: #22c55e;
+    background: #f0fdf4;
+}
+
+.log-item--wrong {
+    border-left-color: #ef4444;
+    background: #fef2f2;
+}
+
+.log-question {
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.log-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+}
+
+.log-given {
+    &.correct { color: #16a34a; }
+    &.wrong { color: #dc2626; }
+}
+
+.log-correct {
+    color: #16a34a;
+    font-size: 0.8rem;
+}
+
+.modal-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 16px 0;
+}
+
+.modal-title {
+    margin-top: 0;
+    letter-spacing: 1px;
+}
+
+.modal-subtitle {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.modal-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #111;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+
+    .dash-btn {
+        flex: 1;
+        padding: 10px;
+        margin-top: 0;
+    }
 }

@@ -2,34 +2,105 @@
   <main class="content">
     <header class="dash-header">
       <h1>DashBoard</h1>
+      <button class="dash-btn logout-btn" (click)="logout()">LOGOUT</button>
     </header>
-    
+
     <div class="action-grid">
       <div class="action-card primary" (click)="navigateToQuizMaker()">
         <h3>GENERATE_QUIZ</h3>
-        <p>create a new quiz using keyword or syllabus</p>
+        <p>Create a new quiz using keyword or syllabus</p>
         <button class="dash-btn">Generate</button>
+      </div>
+
+      <div class="action-card join-quiz" (click)="navigateToCandidate()">
+        <h3>JOIN_QUIZ</h3>
+        <p>Enter a session ID to attempt a quiz as a candidate</p>
+        <button class="dash-btn">Join</button>
       </div>
 
       <div class="action-card group-quiz">
         <h3>GROUP_QUIZZES</h3>
         <p>Create a new group quiz with your friends</p>
-        <button class="dash-btn secondary">Generate</button>
+        <button class="dash-btn secondary" disabled title="Coming soon">Coming Soon</button>
       </div>
     </div>
 
+    <!-- ACTIVE SESSIONS -->
     <section class="live-sessions" *ngIf="sessionIds.length > 0">
-      <h2>ACTIVE_SESSIONS</h2>
+      <h2 class="section-title">ACTIVE_SESSIONS</h2>
       <div class="session-list">
         <div *ngFor="let id of sessionIds" class="session-item">
+
+          <!-- Session Header -->
           <div class="session-info" (click)="toggleStudentList(id)">
-            <span class="id-tag">ID: {{ id }}</span>
-            <span class="title">{{ localSessions[id].title }}</span>
-            <span class="count">{{ getStudentEntries(localSessions[id]).length }} ACTIVE</span>
-            <button class="end-btn" (click)="endExam(id); $event.stopPropagation()">STOP</button>
+            <div class="session-meta">
+              <span class="id-tag">[{{ id }}]</span>
+              <span class="session-title">{{ localSessions[id].title }}</span>
+            </div>
+            <div class="session-actions">
+              <span class="count">{{ getStudentEntries(localSessions[id]).length }} CANDIDATE(S)</span>
+              <button class="end-btn" (click)="endExam(id); $event.stopPropagation()">TERMINATE</button>
+              <span class="chevron">{{ localSessions[id].isExpanded ? '▲' : '▼' }}</span>
+            </div>
           </div>
+
+          <!-- Student List -->
+          <div class="student-list" *ngIf="localSessions[id].isExpanded">
+
+            <div class="no-candidates" *ngIf="getStudentEntries(localSessions[id]).length === 0">
+              >> WAITING_FOR_CANDIDATES...
+            </div>
+
+            <div class="student-row" *ngFor="let entry of getStudentEntries(localSessions[id])">
+              <div class="student-info">
+                <span class="student-name">{{ entry[1].name }}</span>
+                <span class="student-score">SCORE: {{ entry[1].score }}</span>
+                <span class="offline-badge" *ngIf="!entry[1].online">[OFFLINE]</span>
+              </div>
+              <button class="logs-btn" (click)="openLogs(id, entry[0])">VIEW_LOGS</button>
+            </div>
+
           </div>
+        </div>
       </div>
     </section>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" *ngIf="sessionIds.length === 0">
+      >> NO_ACTIVE_SESSIONS — Generate a quiz to get started.
+    </div>
+
   </main>
+</div>
+
+<!-- LOG REVIEW MODAL -->
+<div class="modal-overlay" *ngIf="selectedLog">
+  <div class="modal-box modal-box--wide">
+    <h3 class="modal-title">LOG_REVIEW: {{ selectedLog.name }}</h3>
+    <p class="modal-subtitle">Score: {{ selectedLog.currentScore }}</p>
+
+    <div class="log-list">
+      <div *ngFor="let log of selectedLog.questionLogs; let i = index"
+        class="log-item" [class.log-item--correct]="log.isCorrect" [class.log-item--wrong]="!log.isCorrect">
+        <p class="log-question">Q{{ i + 1 }}: {{ log.text }}</p>
+        <div class="log-answers">
+          <span class="log-given" [class.correct]="log.isCorrect" [class.wrong]="!log.isCorrect">
+            ▶ {{ log.given }}
+          </span>
+          <span class="log-correct" *ngIf="!log.isCorrect">
+            ✓ {{ log.correct }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="modal-divider" />
+
+    <label class="modal-label" for="newScore">MANUAL SCORE OVERRIDE</label>
+    <input class="modal-input" type="number" [(ngModel)]="overrideValue" min="0" id="newScore"/>
+    <div class="modal-actions">
+      <button class="dash-btn" (click)="saveOverride()">PUSH_CHANGES</button>
+      <button class="dash-btn secondary" (click)="selectedLog = null">CLOSE</button>
+    </div>
+  </div>
 </div>

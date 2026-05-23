@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth'; 
@@ -30,6 +30,7 @@ interface ExamSession {
 export class DashboardComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   // Signals for UI reactivity
   userProfile = this.authService.currentUser;
@@ -47,18 +48,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.socket = io(); 
 
     this.socket.on('admin-init', (sessions: { [key: string]: ExamSession }) => {
-      // Initialize sessions and ensure isExpanded property exists
-      this.localSessions = sessions;
+      this.localSessions = { ...sessions };
       Object.keys(this.localSessions).forEach(id => {
         this.localSessions[id].isExpanded = false;
       });
+      this.cdr.detectChanges();
     });
 
     this.socket.on('admin-update', ({ sessionId, session }: { sessionId: string, session: ExamSession }) => {
-      // Maintain the expansion state when data updates
       const wasExpanded = this.localSessions[sessionId]?.isExpanded || false;
-      this.localSessions[sessionId] = session;
-      this.localSessions[sessionId].isExpanded = wasExpanded;
+      this.localSessions = { ...this.localSessions, [sessionId]: { ...session, isExpanded: wasExpanded } };
+      this.cdr.detectChanges();
     });
   }
 
@@ -79,12 +79,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
   openLogs(sessId: string, studId: string) {
     const session = this.localSessions[sessId];
     const student = session.students[studId];
-    
+    const questions = session.questions || [];
+
+    const questionLogs = questions.map((q: any, i: number) => {
+      const given = student.answers?.[i] ?? 'NO ANSWER';
+      const correct = q.correctAnswer || '';
+      const isCorrect = String(given).trim().toLowerCase() === String(correct).trim().toLowerCase();
+      return { text: q.text, given, correct, isCorrect };
+    });
+
     this.selectedLog = {
       sessId,
       studId,
       name: student.name,
-      currentScore: student.score || 0
+      currentScore: student.score || 0,
+      questionLogs
     };
     this.overrideValue = student.score || 0;
   }
@@ -112,6 +121,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   navigateToQuizMaker() { 
     this.router.navigate(['/examgen']); 
+  }
+
+  navigateToCandidate() {
+    this.router.navigate(['/candidate']);
   }
 
   logout() { 

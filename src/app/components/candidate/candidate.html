@@ -1,28 +1,38 @@
-    <div class="container">
-        <div id="login-view" class="card">
-            <h1>>> CANDIDATE_LOGIN</h1>
-            <input type="text" id="std-sid" placeholder="SESSION_ID (e.g. ALGO-1234)">
-            <input type="text" id="std-name" placeholder="YOUR_FULL_NAME">
-            <input type="password" id="std-pass" placeholder="ACCESS_PASSWORD">
-            <button class="primary-btn" onclick="joinSession()">INITIALIZE UPLINK</button>
-        </div>
+<div class="container">
+  <div *ngIf="!isJoined" class="card">
+    <h1>>> CANDIDATE LOGIN</h1>
+    <input type="text" [(ngModel)]="sessionId" placeholder="SESSION_ID (e.g. ALGO-1234)" />
+    <input type="text" [(ngModel)]="studentName" placeholder="YOUR_FULL_NAME" />
+    <input type="password" [(ngModel)]="password" placeholder="ACCESS_PASSWORD" />
+    <button class="primary-btn" (click)="joinSession()">INITIALIZE UPLINK</button>
+    <p class="error" *ngIf="joinError">{{ joinError }}</p>
+  </div>
 
-        <div id="exam-area" class="hidden">
-            <div class="card">
-                <h2 id="live-title">SESSION_ACTIVE</h2>
-                <div id="status-bar">
-                    UPLINK_STABLE | MONITORING_ACTIVE
-                </div>
-            </div>
-
-            <div id="questions-list"></div>
-
-            <div class="card">
-                <button class="primary-btn" onclick="submitExam()">FINALIZE & SUBMIT</button>
-            </div>
-        </div>
+  <div *ngIf="isJoined" class="exam-card">
+    <h1>SESSION ACTIVE</h1>
+    <div class="status-bar">UPLINK_STABLE | MONITORING_ACTIVE</div>
+    <div class="session-meta">
+      <span>Session ID: {{ sessionId }}</span>
+      <span>Timer: {{ timerDisplay }}</span>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/app.js"></script>
-    <script src="./js/student.js"></script>
+    <div class="question-card" *ngFor="let question of questions; let i = index">
+      <h3>Q{{ i + 1 }}: {{ question.text }}</h3>
+
+      <div *ngIf="question.type === 'Short'">
+        <textarea rows="4" [(ngModel)]="studentAnswers[i]" (ngModelChange)="updateAnswer(i, $event)" placeholder="Enter your answer"></textarea>
+      </div>
+
+      <div *ngIf="question.type !== 'Short'" class="options-block">
+        <label *ngFor="let option of question.options">
+          <input type="radio" name="answer-{{ i }}" [value]="option" [(ngModel)]="studentAnswers[i]" (ngModelChange)="updateAnswer(i, $event)" />
+          {{ option }}
+        </label>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="primary-btn" (click)="submitExam()" [disabled]="isSubmitted">FINALIZE & SUBMIT</button>
+    </div>
+  </div>
+</div>
