@@ -405,7 +405,7 @@ git push origin feature/your-feature
 
 ## >> LICENSE
 
-MIT © [Bhavish Agrawal](https://github.com/Bhavish089)
+IIMT © [Bhavish Agrawal](https://github.com/Bhavish089)
 
 ---
 
