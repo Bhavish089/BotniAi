@@ -1,23 +1,22 @@
 <div align="center">
 
-```
- █████╗ ██╗      ██████╗  ██████╗      █████╗ ██████╗ ███████╗███╗   ██╗ █████╗ 
-██╔══██╗██║     ██╔════╝ ██╔═══██╗    ██╔══██╗██╔══██╗██╔════╝████╗  ██║██╔══██╗
-███████║██║     ██║  ███╗██║   ██║    ███████║██████╔╝█████╗  ██╔██╗ ██║███████║
-██╔══██║██║     ██║   ██║██║   ██║    ██╔══██║██╔══██╗██╔══╝  ██║╚██╗██║██╔══██║
-██║  ██║███████╗╚██████╔╝╚██████╔╝    ██║  ██║██║  ██║███████╗██║ ╚████║██║  ██║
-╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝
-```
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=40&duration=3000&pause=1000&color=FFFFFF&background=0A0A0A&center=true&vCenter=true&width=700&height=100&lines=ALGOARENA;AI+EXAM+PLATFORM;>> SYSTEM+ONLINE" alt="AlgoArena" />
 
 **AI-powered quiz generation & real-time exam proctoring platform**
 
-[![Angular](https://img.shields.io/badge/Angular-21-DD0031?style=flat-square&logo=angular)](https://angular.io)
-[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000000?style=flat-square&logo=vercel)](https://vercel.com)
-[![Groq](https://img.shields.io/badge/AI-Groq_LLaMA-F55036?style=flat-square)](https://groq.com)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![Angular](https://img.shields.io/badge/Angular-21-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![Groq](https://img.shields.io/badge/AI-Groq_LLaMA-F55036?style=for-the-badge)](https://groq.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![License](https://img.shields.io/badge/License-IIMT-gold?style=for-the-badge)](LICENSE)
 
-[**Live Demo**](https://algo-arena-tavx.vercel.app) · [**Report Bug**](https://github.com/Bhavish089/AlgoArena/issues) · [**Request Feature**](https://github.com/Bhavish089/AlgoArena/issues)
+[**🚀 Live Demo**](https://algo-arena-tavx.vercel.app) · [**🐛 Report Bug**](https://github.com/Bhavish089/AlgoArena/issues) · [**✨ Request Feature**](https://github.com/Bhavish089/AlgoArena/issues)
+
+---
+
+*Major Project — Diploma in Computer Science Engineering*  
+*3rd Year · 6th Semester · IIMT*
 
 </div>
 
@@ -25,7 +24,7 @@
 
 ## >> WHAT IS ALGOARENA?
 
-AlgoArena is a full-stack exam platform where admins can generate AI-powered quizzes from any syllabus or topic, publish them as live sessions, and monitor candidates in real time — all from a single dashboard.
+AlgoArena is a full-stack exam platform where admins generate AI-powered quizzes from any syllabus, publish them as live sessions, and monitor candidates in real time — all from a single dashboard.
 
 Candidates join with a session ID and password, attempt the quiz within a time limit, and get scored instantly. Admins can review every answer, override scores manually, and detect suspicious behavior via tab-switch tracking.
 
@@ -34,7 +33,7 @@ ADMIN                          CANDIDATE
   │                               │
   ├─ Generate quiz (AI)           ├─ Sign up / Login
   ├─ Edit questions               ├─ Join session (ID + password)
-  ├─ Set timer & expiry           ├─ Attempt quiz
+  ├─ Set timer & expiry           ├─ Attempt quiz (MCQ/TF/Short)
   ├─ Publish → Supabase           ├─ Auto-submit on timeout
   ├─ Watch dashboard live         └─ Get score instantly
   ├─ View candidate logs
@@ -46,16 +45,16 @@ ADMIN                          CANDIDATE
 
 ## >> TECH STACK
 
-| Layer | Technology |
-|---|---|
-| **Frontend** | Angular 21, TypeScript, SCSS |
-| **Backend (Dev)** | Node.js, Express, Socket.IO |
-| **Backend (Prod)** | Vercel Serverless Functions |
-| **Database** | Supabase (PostgreSQL) |
-| **Auth** | Supabase Auth |
-| **AI** | Groq API (LLaMA 3.1 8B Instant) |
-| **Deployment** | Vercel (frontend + serverless) |
-| **Compression** | Node.js zlib (gzip) |
+| Layer | Technology | Purpose |
+|---|---|---|
+| **Frontend** | Angular 21, TypeScript, SCSS | SPA with routing + reactive UI |
+| **Backend (Dev)** | Node.js, Express, Socket.IO | Local dev server with real-time |
+| **Backend (Prod)** | Vercel Serverless Functions | 8 API endpoints, zero cold-start issues |
+| **Database** | Supabase (PostgreSQL) | Sessions, submissions, profiles |
+| **Auth** | Supabase Auth | Email/password, JWT tokens, RLS |
+| **AI** | Groq API (LLaMA 3.1 8B Instant) | Quiz generation from syllabus |
+| **Compression** | Node.js zlib (gzip) | Quiz data compressed ~80% before DB storage |
+| **Deployment** | Vercel | Auto-deploy on push to `main` |
 
 ---
 
@@ -84,19 +83,19 @@ AlgoArena/
 │   │   │   ├── examgen/          # Quiz builder (setup → edit → preview → publish)
 │   │   │   └── candidate/        # Exam attempt interface
 │   │   ├── services/
-│   │   │   └── auth.ts           # Supabase auth service + session management
+│   │   │   └── auth.ts           # Supabase auth + session management
 │   │   ├── app.routes.ts         # SPA routing
 │   │   └── app.config.ts
 │   ├── environments/
-│   │   ├── environment.ts        # Production (Supabase + serverless)
-│   │   └── environment.development.ts  # Dev (Socket.IO + proxy)
+│   │   ├── environment.ts        # Production config
+│   │   └── environment.development.ts  # Dev config (Socket.IO + proxy)
 │   └── styles.css                # Global theme variables (light/dark/high-contrast)
 │
 ├── src/server/
-│   └── socket-server.js          # Express + Socket.IO server (local dev only)
+│   └── socket-server.js          # Express + Socket.IO (local dev only)
 │
 ├── proxy.conf.json               # Angular dev proxy → localhost:3000
-├── vercel.json                   # Vercel build config + API rewrites
+├── vercel.json                   # Build config + API rewrites
 └── package.json
 ```
 
@@ -106,83 +105,59 @@ AlgoArena/
 
 ### Dev vs Production
 
-AlgoArena runs two different backends depending on environment:
-
 ```
-┌─────────────────────────────────────────────────────────┐
-│  DEVELOPMENT (npm run dev)                               │
-│                                                         │
-│  Browser → Angular (4200) → proxy → Express (3000)     │
-│                                        └── Socket.IO    │
-│                                        └── In-memory    │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│  DEVELOPMENT  (npm run dev)                          │
+│                                                      │
+│  Browser → Angular :4200 → proxy → Express :3000    │
+│                                     └─ Socket.IO     │
+│                                     └─ In-memory     │
+└──────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────┐
-│  PRODUCTION (Vercel)                                    │
-│                                                         │
-│  Browser → Angular (static) → vercel.json rewrites     │
-│                                └── /api/*.js (serverless)│
-│                                └── Supabase (persistent) │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│  PRODUCTION  (Vercel)                                │
+│                                                      │
+│  Browser → Angular (static build)                   │
+│               └── vercel.json rewrites               │
+│                     └── /api/*.js (serverless)       │
+│                           └── Supabase (persistent)  │
+└──────────────────────────────────────────────────────┘
 ```
 
-### Data Flow — Quiz Generation
+### Quiz Generation Flow
 
 ```
 Admin fills form (title, syllabus, count, timer, password)
-    │
-    ▼
-POST /generate → api/generate.js
-    │
-    ▼
-Groq LLaMA 3.1 8B → JSON quiz object
-    │
-    ▼
-Normalize + pad to exact question count
-    │
-    ▼
-Return to Angular → examgen editor
-    │
-    ▼
-Admin edits/previews → clicks Publish
-    │
-    ▼
-POST /create-session → api/create-session.js
-    │
-    ├── Verify admin token (Supabase Auth)
-    ├── Check role === 'admin' in profiles table
-    ├── gzip compress quiz data → base64
-    └── INSERT into sessions table (Supabase)
+    ↓
+POST /generate → api/generate.js → Groq LLaMA 3.1
+    ↓
+Normalize questions → Angular editor
+    ↓
+Admin edits/previews → Publish
+    ↓
+POST /create-session
+    ├── Verify admin JWT
+    ├── Check role === 'admin'
+    ├── gzip compress quiz → base64
+    └── INSERT into Supabase sessions table
 ```
 
-### Data Flow — Candidate Attempt
+### Candidate Flow
 
 ```
-Candidate enters session ID + name + password
-    │
-    ▼
-POST /join-session → api/join-session.js
-    │
-    ├── Verify candidate token
-    ├── Check session exists + not expired + not closed
-    ├── Check password matches
-    ├── Check no duplicate submission
-    ├── Decompress (base64 → gunzip → JSON)
-    └── Return questions + timer
-    │
-    ▼
-Candidate attempts quiz (timer counts down)
-    │
-    ├── Tab switch detected → tabSwitches++
-    └── Timer hits 0 → auto-submit
-    │
-    ▼
-POST /submit-exam → api/submit-exam.js
-    │
-    ├── Verify candidate token
-    ├── Decompress questions from session
-    ├── Grade answers (case-insensitive match)
-    ├── Calculate suspicion (CLEAN/MEDIUM/HIGH)
+Enter session ID + name + password
+    ↓
+POST /join-session
+    ├── Verify candidate JWT
+    ├── Check session valid + not expired
+    ├── Check password + no duplicate submission
+    └── Decompress + return questions
+    ↓
+Attempt quiz (tab switches tracked)
+    ↓
+POST /submit-exam
+    ├── Grade answers
+    ├── Calculate suspicion level
     └── INSERT into submissions table
 ```
 
@@ -191,90 +166,32 @@ POST /submit-exam → api/submit-exam.js
 ## >> DATABASE SCHEMA
 
 ```sql
--- User profiles (extends Supabase Auth)
-profiles
-  ├── id          uuid  PK → auth.users
-  ├── email       text
-  ├── full_name   text
-  ├── phone       text
-  ├── role        text  CHECK ('admin' | 'candidate')
-  └── created_at  timestamptz
-
--- Exam sessions
-sessions
-  ├── id              text  PK  (format: ALGO-XXXX)
-  ├── owner_id        uuid  → auth.users
-  ├── title           text
-  ├── description     text
-  ├── password        text
-  ├── validity_start  timestamptz
-  ├── expiry          timestamptz
-  ├── submit_timeout  int   (minutes)
-  ├── max_candidates  int
-  ├── data            text  (gzip compressed + base64 encoded quiz)
-  ├── closed          boolean
-  └── created_at      timestamptz
-
--- Candidate submissions
-submissions
-  ├── id            uuid  PK
-  ├── session_id    text  → sessions
-  ├── candidate_id  uuid  → auth.users
-  ├── answers       jsonb
-  ├── score         int
-  ├── status        text
-  ├── tab_switches  int
-  ├── suspicion     text  ('CLEAN' | 'MEDIUM' | 'HIGH')
-  ├── time_taken    int   (seconds)
-  └── submitted_at  timestamptz
+profiles      id, email, full_name, phone, role, created_at
+sessions      id (ALGO-XXXX), owner_id, title, password,
+              validity_start, expiry, submit_timeout,
+              max_candidates, data (gzipped), closed, created_at
+submissions   id, session_id, candidate_id, answers,
+              score, status, tab_switches, suspicion,
+              time_taken, submitted_at
 ```
 
-**Auto-cleanup:** pg_cron deletes expired sessions every 10 minutes.
+> Quiz data is gzip compressed before storing — reduces payload ~80% (20KB → ~2KB typical quiz).  
+> pg_cron auto-deletes expired sessions every 10 minutes.
 
 ---
 
 ## >> API REFERENCE
 
-All endpoints are Vercel Serverless Functions. In development they're proxied via `proxy.conf.json` to `localhost:3000`.
-
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
 | `POST` | `/generate` | — | Generate quiz via Groq AI |
-| `POST` | `/create-session` | Admin token | Publish quiz to Supabase |
-| `GET` | `/get-sessions` | Admin token | Fetch admin's active sessions |
-| `GET` | `/get-submissions` | Admin token | Fetch session's candidate submissions |
-| `POST` | `/join-session` | Candidate token | Validate + join a session |
-| `POST` | `/submit-exam` | Candidate token | Grade + save answers |
-| `POST` | `/update-score` | Admin token | Override candidate score |
-| `POST` | `/terminate-session` | Admin token | Delete session |
-
-### POST /generate
-```json
-// Request
-{ "syllabus": "Binary Search Trees", "count": 10 }
-
-// Response
-{ "questions": [{ "type": "MCQ", "text": "...", "options": [...], "correctAnswer": "..." }] }
-```
-
-### POST /create-session
-```json
-// Request
-{
-  "title": "DSA Mid-Term",
-  "description": "...",
-  "questions": [...],
-  "password": "secret123",
-  "validityStart": "2026-05-24T10:00:00Z",
-  "expiryDateTime": "2026-05-24T12:00:00Z",
-  "submitTimeout": 60,
-  "maxCandidates": 50,
-  "ownerToken": "eyJ..."
-}
-
-// Response
-{ "success": true, "sessionId": "ALGO-4821" }
-```
+| `POST` | `/create-session` | Admin | Publish quiz to Supabase |
+| `GET` | `/get-sessions` | Admin | Fetch active sessions |
+| `GET` | `/get-submissions` | Admin | Fetch candidate submissions |
+| `POST` | `/join-session` | Candidate | Validate + join session |
+| `POST` | `/submit-exam` | Candidate | Grade + save answers |
+| `POST` | `/update-score` | Admin | Override candidate score |
+| `POST` | `/terminate-session` | Admin | Delete session |
 
 ---
 
@@ -282,137 +199,125 @@ All endpoints are Vercel Serverless Functions. In development they're proxied vi
 
 ### Prerequisites
 
-- Node.js 18+
-- Angular CLI 21
-- Supabase account
-- Groq API key
+```
+Node.js 18+
+Angular CLI 21
+Supabase account
+Groq API key
+```
 
 ### Local Development
 
 ```bash
-# 1. Clone the repo
+# Clone
 git clone https://github.com/Bhavish089/AlgoArena.git
 cd AlgoArena
 
-# 2. Install dependencies
+# Install
 npm install
 
-# 3. Create .env file
+# Environment
 cp .env.example .env
-# Fill in: GROQ_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY
+# Add: GROQ_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY
 
-# 4. Start the backend server (terminal 1)
+# Start backend (terminal 1)
 npm run server
 
-# 5. Start the Angular dev server (terminal 2)
+# Start frontend (terminal 2)
 npm run dev
-# Runs on http://localhost:4200
-# API calls proxy to localhost:3000 via proxy.conf.json
+# → http://localhost:4200
 ```
 
 ### Environment Variables
 
-| Variable | Where | Description |
+| Variable | Used In | Description |
 |---|---|---|
-| `GROQ_API_KEY` | `.env` + Vercel | Groq API key for AI generation |
-| `SUPABASE_URL` | `.env` + Vercel | Your Supabase project URL |
-| `SUPABASE_SERVICE_KEY` | `.env` + Vercel | Supabase service role key (server-side only) |
-
-### Supabase Setup
-
-1. Create a new Supabase project
-2. Run the schema SQL (see `database/schema.sql` or the Database Schema section above)
-3. Enable `pg_cron` extension for auto-cleanup
-4. Add your Supabase URL + publishable key to `src/environments/environment.ts`
+| `GROQ_API_KEY` | `.env` + Vercel | Groq API key |
+| `SUPABASE_URL` | `.env` + Vercel | Supabase project URL |
+| `SUPABASE_SERVICE_KEY` | `.env` + Vercel | Service role key (server only) |
 
 ### Deploy to Vercel
 
 ```bash
-# Push to GitHub — Vercel auto-deploys on every push to main
-git push origin main
+git push origin main   # Vercel auto-deploys
 ```
 
-Add these environment variables in **Vercel → Settings → Environment Variables**:
-- `GROQ_API_KEY`
-- `SUPABASE_URL`
-- `SUPABASE_SERVICE_KEY`
+Add env vars in **Vercel → Settings → Environment Variables**.
 
 ---
 
 ## >> FEATURES
 
-### For Admins
-- **AI Quiz Generation** — Enter any syllabus topic, get MCQ/TF/Short answer questions instantly
-- **Question Editor** — Edit, add, remove questions before publishing
-- **Preview Mode** — Review the full quiz before going live
-- **Session Control** — Set validity window, time limit, password, max candidates
-- **Live Dashboard** — See candidates as they submit in real time (polls every 10s)
-- **Detailed Logs** — View every answer per candidate with correct/incorrect breakdown
-- **Score Override** — Manually adjust any candidate's score
-- **Terminate** — End a session instantly
+```
+ADMIN                           CANDIDATE
+──────────────────────          ──────────────────────
+✓ AI quiz generation            ✓ Account registration
+✓ Question editor               ✓ Session join flow
+✓ Preview before publish        ✓ MCQ / TF / Short answer
+✓ Validity + timer config       ✓ Live countdown timer
+✓ Password protection           ✓ Auto-submit on expiry
+✓ Live dashboard                ✓ Instant score display
+✓ Per-candidate answer logs     ✓ Tab-switch tracking
+✓ Manual score override
+✓ One-click terminate
 
-### For Candidates
-- **Simple Join** — Session ID + name + password
-- **Live Timer** — Countdown with auto-submit on expiry
-- **MCQ / True-False / Short Answer** — All question types supported
-- **Instant Score** — See result immediately after submission
-- **Anti-cheat** — Tab switches tracked and flagged (CLEAN / MEDIUM / HIGH)
-
-### Platform
-- **3 Themes** — Light, Dark, High-Contrast
-- **Fully Responsive** — Mobile, tablet, desktop
-- **Role-based** — Admin and candidate accounts
-- **Secure** — Supabase RLS, token-based auth on all endpoints
-- **Compressed Storage** — Quiz data gzip compressed before saving to DB
+PLATFORM
+──────────────────────
+✓ Light / Dark / High-Contrast themes
+✓ Fully responsive (mobile + tablet + desktop)
+✓ Role-based access (admin / candidate)
+✓ Compressed quiz storage (gzip)
+✓ Auto-delete expired sessions (pg_cron)
+✓ Duplicate submission prevention
+```
 
 ---
 
 ## >> SCRIPTS
 
 ```bash
-npm run dev        # Angular dev server with proxy
-npm run server     # Express + Socket.IO backend (dev only)
-npm run build      # Production Angular build
-npm test           # Run unit tests
+npm run dev      # Angular dev server + proxy
+npm run server   # Express + Socket.IO backend (dev only)
+npm run build    # Production build → dist/AlgoArena-Master/browser
+npm test         # Unit tests
 ```
 
 ---
 
 ## >> ROADMAP
 
-- [ ] Group quizzes (collaborative attempt mode)
-- [ ] Real-time dashboard updates (Supabase Realtime)
-- [ ] Email notifications on session publish
-- [ ] Question bank — save and reuse questions
-- [ ] Analytics — score distributions, time analysis
-- [ ] PDF export of results
-- [ ] OAuth login (Google, GitHub)
+- [ ] Group quizzes (collaborative mode)
+- [ ] Supabase Realtime (live dashboard updates)
+- [ ] Email notifications on publish
+- [ ] Question bank
+- [ ] Analytics & score distributions
+- [ ] PDF result export
+- [ ] OAuth (Google / GitHub)
 
 ---
 
-## >> CONTRIBUTING
+## >> TEAM
 
-Pull requests are welcome. For major changes, please open an issue first.
+<div align="center">
 
-```bash
-git checkout -b feature/your-feature
-git commit -m "feat: your feature"
-git push origin feature/your-feature
-# Open a PR
-```
+| | Name | Role |
+|---|---|---|
+| 👨‍💻 | **Bhavish Agrawal** | Lead Developer — Full Stack, Architecture, Deployment |
+| 👨‍💻 | **Priyanshu Pushpam** | Frontend Developer — UI/UX, Components |
+| 👨‍💻 | **Ansh Singhal** | Backend Developer — API, Database |
+| 👨‍💻 | **Mizbual Haque** | Developer — Testing, Integration |
 
----
+*Diploma in Computer Science Engineering — 3rd Year, 6th Semester*  
+*Major Project — IIMT*
 
-## >> LICENSE
-
-IIMT © [Bhavish Agrawal](https://github.com/Bhavish089)
+</div>
 
 ---
 
 <div align="center">
 
-Built with Angular, Supabase, Groq, and Vercel
+Built with Angular · Supabase · Groq · Vercel
 
-*>> SYSTEM ONLINE — GOOD LUCK, CANDIDATES.*
+**>> SYSTEM ONLINE — GOOD LUCK, CANDIDATES.**
 
 </div>
