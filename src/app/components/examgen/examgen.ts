@@ -83,6 +83,8 @@ export class Examgen implements OnInit {
       const data = await response.json();
       const normalized = this.normalizeQuestions(data.questions || []);
       this.questions = normalized;
+      
+      // Forces the application to switch directly to the editor screen without getting stuck
       this.currentView = 'editor';
     } catch (error) {
       console.error('Generate Quiz error:', error);

@@ -34,6 +34,9 @@ module.exports = async function handler(req, res) {
         .eq('id', sessionId)
         .single();
 
+    if (session.validity_start && new Date() < new Date(session.validity_start)) {
+        return res.status(403).json({ error: 'This exam has not started yet.' });
+    }
     if (sessionError || !session) return res.status(404).json({ error: 'Session not found' });
     if (session.closed) return res.status(403).json({ error: 'Session is closed' });
     if (new Date(session.expiry) < new Date()) return res.status(403).json({ error: 'Session has expired' });
