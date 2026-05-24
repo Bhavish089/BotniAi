@@ -1,0 +1,103 @@
+<svg width="100%" viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>AlgoArena Banner</title>
+<desc>Animated terminal-style banner for AlgoArena</desc>
+<style>
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  @keyframes glitch1 { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-3px,1px)} 40%{transform:translate(3px,-1px)} 60%{transform:translate(-2px,2px)} 80%{transform:translate(2px,-2px)} }
+  @keyframes glitch2 { 0%,100%{transform:translate(0,0);opacity:0} 20%{transform:translate(4px,0);opacity:0.6} 40%{transform:translate(-4px,0);opacity:0.4} 60%{transform:translate(4px,0);opacity:0.5} 80%{transform:translate(-4px,0);opacity:0} }
+  @keyframes scanline { 0%{transform:translateY(-340px)} 100%{transform:translateY(340px)} }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:0.4} 94%{opacity:1} 96%{opacity:0.8} 97%{opacity:1} }
+  @keyframes pulse { 0%,100%{opacity:0.15} 50%{opacity:0.35} }
+  @keyframes marquee { 0%{transform:translateX(680px)} 100%{transform:translateX(-1100px)} }
+  .main-title { animation: glitch1 4s infinite, flicker 6s infinite; }
+  .glitch-red { animation: glitch2 4s infinite; fill: #ff3333; }
+  .glitch-cyan { animation: glitch2 4s 0.1s infinite; fill: #00ffff; }
+  .cursor { animation: blink 1s infinite; }
+  .scanline { animation: scanline 3s linear infinite; opacity: 0.04; }
+  .line1 { animation: fadeIn 0.5s 0.2s both; }
+  .line2 { animation: fadeIn 0.5s 0.5s both; }
+  .line3 { animation: fadeIn 0.5s 0.8s both; }
+  .line4 { animation: fadeIn 0.5s 1.1s both; }
+  .line5 { animation: fadeIn 0.5s 1.4s both; }
+  .line6 { animation: fadeIn 0.5s 1.7s both; }
+  .badge { animation: fadeIn 0.5s 2s both; }
+  .ticker { animation: marquee 16s linear infinite; }
+  .bg-pulse { animation: pulse 3s infinite; }
+</style>
+
+<rect width="680" height="340" fill="#0a0a0a"/>
+<rect class="bg-pulse" width="680" height="340" fill="#111"/>
+
+<line x1="0" y1="1" x2="680" y2="1" stroke="#333" stroke-width="1"/>
+<line x1="0" y1="339" x2="680" y2="339" stroke="#333" stroke-width="1"/>
+<line x1="1" y1="0" x2="1" y2="340" stroke="#333" stroke-width="1"/>
+<line x1="679" y1="0" x2="679" y2="340" stroke="#333" stroke-width="1"/>
+
+<line x1="0" y1="28" x2="680" y2="28" stroke="#222" stroke-width="1"/>
+<circle cx="14" cy="14" r="5" fill="#ff5f57"/>
+<circle cx="30" cy="14" r="5" fill="#febc2e"/>
+<circle cx="46" cy="14" r="5" fill="#28c840"/>
+<text x="340" y="19" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="#555">algoarena — bash</text>
+
+<rect class="scanline" x="0" y="0" width="680" height="6" fill="white"/>
+
+<text class="glitch-red" x="340" y="105" text-anchor="middle" font-family="Consolas,monospace" font-size="42" font-weight="bold" letter-spacing="8">ALGOARENA</text>
+<text class="glitch-cyan" x="340" y="105" text-anchor="middle" font-family="Consolas,monospace" font-size="42" font-weight="bold" letter-spacing="8">ALGOARENA</text>
+<text class="main-title" x="340" y="105" text-anchor="middle" font-family="Consolas,monospace" font-size="42" font-weight="bold" letter-spacing="8" fill="#ffffff">ALGOARENA</text>
+
+<text class="line1" x="340" y="135" text-anchor="middle" font-family="Consolas,monospace" font-size="12" fill="#888" letter-spacing="3">AI-POWERED EXAM GENERATION &amp; PROCTORING</text>
+
+<line x1="100" y1="148" x2="580" y2="148" stroke="#222" stroke-width="1"/>
+
+<text class="line2" x="60" y="172" font-family="Consolas,monospace" font-size="11" fill="#444">$</text>
+<text class="line2" x="75" y="172" font-family="Consolas,monospace" font-size="11" fill="#00ff88">system</text>
+<text class="line2" x="130" y="172" font-family="Consolas,monospace" font-size="11" fill="#888">Angular 21 + Supabase + Groq LLaMA + Vercel</text>
+
+<text class="line3" x="60" y="190" font-family="Consolas,monospace" font-size="11" fill="#444">$</text>
+<text class="line3" x="75" y="190" font-family="Consolas,monospace" font-size="11" fill="#00ff88">status</text>
+<text class="line3" x="130" y="190" font-family="Consolas,monospace" font-size="11" fill="#888">ONLINE — deployed at algo-arena-tavx.vercel.app</text>
+
+<text class="line4" x="60" y="208" font-family="Consolas,monospace" font-size="11" fill="#444">$</text>
+<text class="line4" x="75" y="208" font-family="Consolas,monospace" font-size="11" fill="#00ff88">team</text>
+<text class="line4" x="130" y="208" font-family="Consolas,monospace" font-size="11" fill="#888">Bhavish · Priyanshu · Ansh · Mizbual</text>
+
+<text class="line5" x="60" y="226" font-family="Consolas,monospace" font-size="11" fill="#444">$</text>
+<text class="line5" x="75" y="226" font-family="Consolas,monospace" font-size="11" fill="#00ff88">course</text>
+<text class="line5" x="130" y="226" font-family="Consolas,monospace" font-size="11" fill="#888">Diploma CSE — 3rd Year, 6th Sem — Major Project — IIMT</text>
+
+<text class="line6" x="60" y="244" font-family="Consolas,monospace" font-size="11" fill="#444">$</text>
+<rect class="cursor line6" x="75" y="233" width="8" height="13" fill="#ffff00"/>
+
+<line x1="100" y1="262" x2="580" y2="262" stroke="#222" stroke-width="1"/>
+
+<g class="badge">
+  <rect x="60" y="273" width="82" height="20" rx="2" fill="none" stroke="#DD0031" stroke-width="1"/>
+  <text x="101" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#DD0031">Angular 21</text>
+
+  <rect x="152" y="273" width="76" height="20" rx="2" fill="none" stroke="#3ECF8E" stroke-width="1"/>
+  <text x="190" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#3ECF8E">Supabase</text>
+
+  <rect x="238" y="273" width="56" height="20" rx="2" fill="none" stroke="#888" stroke-width="1"/>
+  <text x="266" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#888">Vercel</text>
+
+  <rect x="304" y="273" width="46" height="20" rx="2" fill="none" stroke="#F55036" stroke-width="1"/>
+  <text x="327" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#F55036">Groq</text>
+
+  <rect x="360" y="273" width="76" height="20" rx="2" fill="none" stroke="#3178c6" stroke-width="1"/>
+  <text x="398" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#3178c6">TypeScript</text>
+
+  <rect x="446" y="273" width="44" height="20" rx="2" fill="none" stroke="#ffff00" stroke-width="1"/>
+  <text x="468" y="287" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#ffff00">IIMT</text>
+</g>
+
+<clipPath id="tickerClip">
+  <rect x="0" y="305" width="680" height="20"/>
+</clipPath>
+<line x1="0" y1="308" x2="680" y2="308" stroke="#1a1a1a" stroke-width="1"/>
+<g clip-path="url(#tickerClip)">
+  <text class="ticker" y="321" font-family="Consolas,monospace" font-size="10" fill="#333" letter-spacing="2">
+    >> GENERATE QUIZ  ·  PUBLISH SESSION  ·  CANDIDATE ATTEMPTS  ·  REAL-TIME DASHBOARD  ·  AI GRADING  ·  TAB DETECTION  ·  SCORE OVERRIDE  ·  3 THEMES  ·  MOBILE READY  ·
+  </text>
+</g>
+</svg>
