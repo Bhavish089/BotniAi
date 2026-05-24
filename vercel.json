@@ -7,6 +7,8 @@
         { "source": "/get-sessions", "destination": "/api/get-sessions" },
         { "source": "/join-session", "destination": "/api/join-session" },
         { "source": "/submit-exam", "destination": "/api/submit-exam" },
-        { "source": "/(.*)", "destination": "/index.html" }
+        { "source": "/(.*)", "destination": "/index.html" },
+        { "source": "/update-score", "destination": "/api/update-score" },
+        { "source": "/terminate-session", "destination": "/api/terminate-session" }
     ]
 }

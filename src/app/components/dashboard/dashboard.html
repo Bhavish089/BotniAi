@@ -1,27 +1,48 @@
 <div class="dashboard-wrapper">
   <main class="content">
+
+    <!-- HEADER -->
     <header class="dash-header">
-      <h1>DashBoard</h1>
-      <button class="dash-btn logout-btn" (click)="logout()">LOGOUT</button>
+      <h1>DASHBOARD</h1>
+      <div class="header-right">
+        <button class="dash-btn logout-btn" (click)="logout()">LOGOUT</button>
+      </div>
     </header>
 
+    <!-- USER PROFILE PANEL -->
+    <div class="profile-panel">
+      <div class="profile-avatar">
+        {{ (userProfile()?.full_name || userProfile()?.email || 'U').charAt(0).toUpperCase() }}
+      </div>
+      <div class="profile-info">
+        <div class="profile-name">{{ userProfile()?.full_name || userProfile()?.email || 'USER' }}</div>
+        <div class="profile-role">{{ userProfile()?.role || 'candidate' }}</div>
+      </div>
+      <div class="theme-switcher">
+        <button class="theme-btn" [class.active]="currentTheme === 'light'" (click)="setTheme('light')">LIGHT</button>
+        <button class="theme-btn" [class.active]="currentTheme === 'dark'" (click)="setTheme('dark')">DARK</button>
+        <button class="theme-btn" [class.active]="currentTheme === 'high-contrast'" (click)="setTheme('high-contrast')">HC</button>
+      </div>
+    </div>
+
+    <!-- ACTION GRID -->
     <div class="action-grid">
-      <div class="action-card primary" (click)="navigateToQuizMaker()">
+      <div class="action-card" (click)="navigateToQuizMaker()">
         <h3>GENERATE_QUIZ</h3>
         <p>Create a new quiz using keyword or syllabus</p>
         <button class="dash-btn">Generate</button>
       </div>
 
-      <div class="action-card join-quiz" (click)="navigateToCandidate()">
+      <div class="action-card" (click)="navigateToCandidate()">
         <h3>JOIN_QUIZ</h3>
         <p>Enter a session ID to attempt a quiz as a candidate</p>
         <button class="dash-btn">Join</button>
       </div>
 
-      <div class="action-card group-quiz">
+      <div class="action-card">
         <h3>GROUP_QUIZZES</h3>
         <p>Create a new group quiz with your friends</p>
-        <button class="dash-btn secondary" disabled title="Coming soon">Coming Soon</button>
+        <button class="dash-btn secondary" disabled>Coming Soon</button>
       </div>
     </div>
 
@@ -31,7 +52,6 @@
       <div class="session-list">
         <div *ngFor="let id of sessionIds" class="session-item">
 
-          <!-- Session Header -->
           <div class="session-info" (click)="toggleStudentList(id)">
             <div class="session-meta">
               <span class="id-tag">[{{ id }}]</span>
@@ -44,23 +64,23 @@
             </div>
           </div>
 
-          <!-- Student List -->
           <div class="student-list" *ngIf="localSessions[id].isExpanded">
-
             <div class="no-candidates" *ngIf="getStudentEntries(localSessions[id]).length === 0">
               >> WAITING_FOR_CANDIDATES...
             </div>
-
             <div class="student-row" *ngFor="let entry of getStudentEntries(localSessions[id])">
               <div class="student-info">
                 <span class="student-name">{{ entry[1].name }}</span>
                 <span class="student-score">SCORE: {{ entry[1].score }}</span>
-                <span class="offline-badge" *ngIf="!entry[1].online">[OFFLINE]</span>
+                <span class="suspicion-badge" *ngIf="entry[1].suspicion && entry[1].suspicion !== 'CLEAN'"
+                  [style.color]="entry[1].suspicion === 'HIGH' ? 'var(--danger)' : 'orange'">
+                  [{{ entry[1].suspicion }}]
+                </span>
               </div>
               <button class="logs-btn" (click)="openLogs(id, entry[0])">VIEW_LOGS</button>
             </div>
-
           </div>
+
         </div>
       </div>
     </section>
@@ -77,11 +97,18 @@
 <div class="modal-overlay" *ngIf="selectedLog">
   <div class="modal-box modal-box--wide">
     <h3 class="modal-title">LOG_REVIEW: {{ selectedLog.name }}</h3>
-    <p class="modal-subtitle">Score: {{ selectedLog.currentScore }}</p>
+    <p class="modal-subtitle">
+      Score: {{ selectedLog.currentScore }} &nbsp;|&nbsp;
+      Tab Switches: {{ selectedLog.tabSwitches }} &nbsp;|&nbsp;
+      Suspicion: {{ selectedLog.suspicion }} &nbsp;|&nbsp;
+      Time: {{ selectedLog.timeTaken }}s
+    </p>
 
     <div class="log-list">
       <div *ngFor="let log of selectedLog.questionLogs; let i = index"
-        class="log-item" [class.log-item--correct]="log.isCorrect" [class.log-item--wrong]="!log.isCorrect">
+        class="log-item"
+        [class.log-item--correct]="log.isCorrect"
+        [class.log-item--wrong]="!log.isCorrect">
         <p class="log-question">Q{{ i + 1 }}: {{ log.text }}</p>
         <div class="log-answers">
           <span class="log-given" [class.correct]="log.isCorrect" [class.wrong]="!log.isCorrect">
@@ -97,7 +124,7 @@
     <hr class="modal-divider" />
 
     <label class="modal-label" for="newScore">MANUAL SCORE OVERRIDE</label>
-    <input class="modal-input" type="number" [(ngModel)]="overrideValue" min="0" id="newScore"/>
+    <input class="modal-input" type="number" [(ngModel)]="overrideValue" min="0" id="newScore" />
     <div class="modal-actions">
       <button class="dash-btn" (click)="saveOverride()">PUSH_CHANGES</button>
       <button class="dash-btn secondary" (click)="selectedLog = null">CLOSE</button>

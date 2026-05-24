@@ -14,10 +14,26 @@ export class AuthService {
     return this.supabase;
   }
 
-  async getAccessToken(): Promise<string | null> {
-    const { data } = await this.supabase.auth.getSession();
-    return data.session?.access_token || null;
-  }
+  // Replace getAccessToken() in auth.ts with this:
+async getAccessToken(): Promise<string | null> {
+    try {
+        // First try to get current session
+        const { data, error } = await this.supabase.auth.getSession();
+        if (error || !data.session) {
+            // Try to refresh
+            const { data: refreshData, error: refreshError } = await this.supabase.auth.refreshSession();
+            if (refreshError || !refreshData.session) {
+                // Session dead — redirect to login
+                this.currentUser.set(null);
+                return null;
+            }
+            return refreshData.session.access_token;
+        }
+        return data.session.access_token;
+    } catch {
+        return null;
+    }
+}
 
   constructor() {
     this.supabase = createClient(
