@@ -33,18 +33,11 @@ module.exports = async function handler(req, res) {
         .select('*')
         .eq('id', sessionId)
         .single();
-
-if (sessionError || !session) return res.status(404).json({ error: 'Session not found' });
+    if (sessionError || !session) return res.status(404).json({ error: 'Session not found' });
     if (session.closed) return res.status(403).json({ error: 'Session is closed' });
+    if (new Date(session.expiry) < new Date()) return res.status(403).json({ error: 'Session has expired' });
+    if (session.password && session.password !== password) return res.status(403).json({ error: 'Invalid password' });
 
-    // Strict timing rule comparing absolute timestamps
-    if (session.validity_start && Date.now() < new Date(session.validity_start).getTime()) {
-        return res.status(403).json({ error: 'This exam has not started yet.' });
-    }
-
-    if (session.expiry && new Date(session.expiry).getTime() < Date.now()) {
-        return res.status(403).json({ error: 'Session has expired' });
-    }
     const { data: existing } = await serviceClient
         .from('submissions')
         .select('id')
