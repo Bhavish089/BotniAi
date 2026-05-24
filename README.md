@@ -335,6 +335,10 @@ npm test         # Unit tests
 
 ---
 
+## `>>` DOCUMENTATION
+
+[![Project Report](https://img.shields.io/badge/Download-Project_Report_PDF-FF0000?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/file/d/1XK_o4CwQY2P_envKj-KIhnl1W39esIm-/view?usp=sharing)
+
 ## `>>` LICENSE
 
 This project was developed as a Major Project submission at **IIMT College of Engineering**.
