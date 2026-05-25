@@ -32,14 +32,14 @@ import {
 export class AppComponent implements OnInit, OnDestroy {
   // --- ALGOARENA CORE PROPERTIES ---
   public authService = inject(AuthService);
-  public router = inject(Router); 
+  public router = inject(Router); // Changed to public for HTML [router.url] check
   isDesktop = navigator.userAgent.indexOf('Electron') >= 0;
   private ipc: any;
   
   // NEW UI STATE
   public isProfileOpen = false;
 
-  // --- ABERIAL STATE PROPERTIES ---
+  // --- ABERIAL STATE PROPERTIES (Consolidated from app.js) ---
   public examData: any[] = [];
   public localSessions: any = {};
   public examTitle: string = '';
@@ -56,14 +56,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private socket: any;
 
   ngOnInit() {
-    // --- STICKY THEME MEMORY ---
-    // Loads the saved theme automatically across the whole app
-    const savedTheme = localStorage.getItem('algo-theme') || 'light';
+    const savedTheme = localStorage.getItem('global-app-theme') || 'light';
     const body = document.body;
     body.classList.remove('light-theme', 'dark-theme', 'high-contrast-theme');
     body.classList.add(`${savedTheme}-theme`);
-
-    // --- ORIGINAL SOCKET CODE ---
     this.socket = io();
 
     this.socket.on('admin-init', (sessions: any) => {
@@ -76,6 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // --- AUTH ACTIONS ---
+
   onLogout() {
     this.authService.logout();
     this.isProfileOpen = false;
@@ -104,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
     (window as any).electronAPI?.close();
   }
 
-  // --- PUBLISHING ---
+  // --- ABERIAL 3: PUBLISHING ---
   async publishExam() {
     try {
       const payload = {
@@ -121,7 +118,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  // --- PROCTOR & LOGS ---
+  // --- ABERIAL 4: PROCTOR & LOGS ---
   toggleStudentList(id: string) {
     if (this.localSessions[id]) {
       this.localSessions[id].isExpanded = !this.localSessions[id].isExpanded;

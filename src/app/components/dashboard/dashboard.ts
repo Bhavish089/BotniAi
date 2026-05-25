@@ -40,16 +40,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public localSessions: { [sessionId: string]: ExamSession } = {};
     public selectedLog: any = null;
     public overrideValue: number = 0;
-    
-    // Auto-loads theme from storage
-    public currentTheme: string = localStorage.getItem('algo-theme') || 'light';
+    public currentTheme = 'light';
 
     private socket?: Socket;
     private pollInterval: any;
 
     async ngOnInit() {
-        // Initialize theme
-        this.setTheme(this.currentTheme);
+        const savedTheme = localStorage.getItem('algo-theme') || 'light';
+        this.setTheme(savedTheme);
 
         if (environment.production) {
             await this.loadSessionsFromSupabase();
@@ -123,16 +121,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    // UPDATED: Now sets the body class so themes apply sitewide
     setTheme(theme: string) {
         this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('algo-theme', theme);
-        
-        const body = document.body;
-        body.classList.remove('light-theme', 'dark-theme', 'high-contrast-theme');
-        body.classList.add(`${theme}-theme`);
-        
-        this.cdr.detectChanges();
     }
 
     toggleStudentList(id: string) {
