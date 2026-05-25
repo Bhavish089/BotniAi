@@ -21,7 +21,6 @@
     max-width: 960px;
     padding: 20px 30px;
     transition: .7s;
-    // removed `top: 30vh` and `position: relative` — wrapper handles centering now
 }
 
 .content:hover {
@@ -88,17 +87,105 @@
     color: #fff;
 }
 
-// --- HEADER ---
+// --- NEW HEADER & PROFILE DESIGN ---
 
 .dash-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid inherit;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
 }
+
+.header-left-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+}
+
+.profile-avatar {
+    width: 46px;
+    height: 46px;
+    background: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 1.2rem;
+}
+body.dark-theme .profile-avatar { background: #f4f4f5; color: #111; }
+body.high-contrast-theme .profile-avatar { background: #00ff00; color: #000; }
+
+
+.profile-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.profile-role {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+.header-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.theme-switcher {
+    display: flex;
+    border: 2px solid currentColor;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.theme-select-btn {
+    background: transparent;
+    color: inherit;
+    border: none;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.theme-select-btn:not(:last-child) {
+    border-right: 1px solid currentColor;
+}
+
+.theme-select-btn.active {
+    background: #111;
+    color: #fff;
+}
+body.dark-theme .theme-select-btn.active { background: #f4f4f5; color: #111; }
+body.high-contrast-theme .theme-select-btn.active { background: #00ff00; color: #000; }
 
 .logout-btn {
     margin-top: 0;
     padding: 8px 20px;
+}
+
+.logout-danger-btn {
+    background: #ef4444;
+    color: #fff;
+    border: 2px solid #111;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.logout-danger-btn:hover {
+    background: #dc2626;
 }
 
 // --- SESSIONS ---
@@ -131,6 +218,8 @@
     cursor: pointer;
     background: #f9f9f9;
 }
+body.dark-theme .session-info { background: #1a1a1e; }
+body.high-contrast-theme .session-info { background: #000; }
 
 .session-meta {
     display: flex;
@@ -166,11 +255,11 @@
     font-weight: bold;
     cursor: pointer;
     transition: .3s;
+}
 
-    &:hover {
-        background: red;
-        color: #fff;
-    }
+.end-btn:hover {
+    background: red;
+    color: #fff;
 }
 
 .chevron {
@@ -183,6 +272,7 @@
     border-top: 2px solid #111;
     min-height: 48px; // prevents jump when list opens
 }
+body.high-contrast-theme .student-list { border-top: 2px solid #00ff00; }
 
 .no-candidates {
     padding: 15px;
@@ -197,6 +287,8 @@
     padding: 12px 15px;
     border-bottom: 1px solid #eee;
 }
+body.dark-theme .student-row { border-bottom: 1px solid #3f3f46; }
+body.high-contrast-theme .student-row { border-bottom: 1px dashed #00ff00; }
 
 .student-info {
     display: flex;
@@ -212,6 +304,8 @@
     font-size: 0.85rem;
     color: #555;
 }
+body.dark-theme .student-score { color: #ccc; }
+body.high-contrast-theme .student-score { color: #00ff00; }
 
 .offline-badge {
     font-size: 0.75rem;
@@ -225,12 +319,16 @@
     cursor: pointer;
     font-weight: bold;
     transition: .3s;
-
-    &:hover {
-        background: #111;
-        color: #fff;
-    }
 }
+
+.logs-btn:hover {
+    background: #111;
+    color: #fff;
+}
+body.dark-theme .logs-btn { border: 2px solid #f4f4f5; background: transparent; color: #f4f4f5; }
+body.dark-theme .logs-btn:hover { background: #f4f4f5; color: #111; }
+body.high-contrast-theme .logs-btn { border: 2px solid #00ff00; background: transparent; color: #00ff00; }
+body.high-contrast-theme .logs-btn:hover { background: #00ff00; color: #000; }
 
 // --- EMPTY STATE ---
 
@@ -264,6 +362,8 @@
     width: 380px;
     box-shadow: 8px 8px 0 #111;
 }
+body.dark-theme .modal-box { background: #18181b; box-shadow: none; border-color: #3f3f46; }
+body.high-contrast-theme .modal-box { background: #000; box-shadow: none; border-color: #00ff00; }
 
 .modal-box--wide {
     width: 620px;
@@ -284,16 +384,22 @@
     border-left: 4px solid #ccc;
     background: #fafafa;
 }
+body.dark-theme .log-item { background: #27272a; border-color: #555; }
+body.high-contrast-theme .log-item { background: #111; border-color: #00ff00; }
 
 .log-item--correct {
     border-left-color: #22c55e;
     background: #f0fdf4;
 }
+body.dark-theme .log-item--correct { background: rgba(34, 197, 94, 0.1); border-left-color: #22c55e; }
+body.high-contrast-theme .log-item--correct { background: #000; border-left-color: #00ff00; }
 
 .log-item--wrong {
     border-left-color: #ef4444;
     background: #fef2f2;
 }
+body.dark-theme .log-item--wrong { background: rgba(239, 68, 68, 0.1); border-left-color: #ef4444; }
+body.high-contrast-theme .log-item--wrong { background: #000; border-left-color: red; }
 
 .log-question {
     margin: 0 0 8px 0;
@@ -312,17 +418,24 @@
     &.correct { color: #16a34a; }
     &.wrong { color: #dc2626; }
 }
+body.dark-theme .log-given.correct { color: #4ade80; }
+body.dark-theme .log-given.wrong { color: #f87171; }
+body.high-contrast-theme .log-given.correct { color: #00ff00; }
+body.high-contrast-theme .log-given.wrong { color: red; }
 
 .log-correct {
     color: #16a34a;
     font-size: 0.8rem;
 }
+body.dark-theme .log-correct { color: #4ade80; }
+body.high-contrast-theme .log-correct { color: #00ff00; }
 
 .modal-divider {
     border: none;
     border-top: 1px solid #ddd;
     margin: 16px 0;
 }
+body.dark-theme .modal-divider { border-color: #3f3f46; }
 
 .modal-title {
     margin-top: 0;
@@ -333,6 +446,8 @@
     color: #555;
     font-size: 0.9rem;
 }
+body.dark-theme .modal-subtitle { color: #aaa; }
+body.high-contrast-theme .modal-subtitle { color: #00ff00; opacity: 0.8; }
 
 .modal-label {
     display: block;
@@ -348,14 +463,16 @@
     margin-bottom: 20px;
     box-sizing: border-box;
 }
+body.dark-theme .modal-input { background: #27272a; color: #fff; border-color: #555; }
+body.high-contrast-theme .modal-input { background: #000; color: #00ff00; border-color: #00ff00; }
 
 .modal-actions {
     display: flex;
     gap: 10px;
+}
 
-    .dash-btn {
-        flex: 1;
-        padding: 10px;
-        margin-top: 0;
-    }
+.modal-actions .dash-btn {
+    flex: 1;
+    padding: 10px;
+    margin-top: 0;
 }
