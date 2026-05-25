@@ -1,9 +1,11 @@
-/* ============================================
-   ALGOARENA — GLOBAL STYLES & THEME VARIABLES
-   ============================================ */
+* {
+    scroll-behavior: smooth;
+}
 
-/* --- LIGHT THEME (default) --- */
-:root,
+::-webkit-scrollbar {
+    width: 0;
+}
+
 html[data-theme="light"] {
     --bg: #ffffff;
     --bg-secondary: #f9f9f9;
@@ -20,13 +22,8 @@ html[data-theme="light"] {
     --success-border: #22c55e;
     --error-bg: #fef2f2;
     --error-border: #ef4444;
-    --input-bg: #ffffff;
-    --input-focus-bg: #111111;
-    --input-focus-fg: #ffffff;
-    --label-bg: #ffffff;
 }
 
-/* --- DARK THEME --- */
 html[data-theme="dark"] {
     --bg: #0d0d0d;
     --bg-secondary: #1a1a1a;
@@ -43,13 +40,8 @@ html[data-theme="dark"] {
     --success-border: #22c55e;
     --error-bg: #1f0a0a;
     --error-border: #ef4444;
-    --input-bg: #0d0d0d;
-    --input-focus-bg: #e8e8e8;
-    --input-focus-fg: #0d0d0d;
-    --label-bg: #0d0d0d;
 }
 
-/* --- HIGH CONTRAST THEME --- */
 html[data-theme="high-contrast"] {
     --bg: #000000;
     --bg-secondary: #0a0a0a;
@@ -66,34 +58,4 @@ html[data-theme="high-contrast"] {
     --success-border: #00ff00;
     --error-bg: #1a0000;
     --error-border: #ff0000;
-    --input-bg: #000000;
-    --input-focus-bg: #ffff00;
-    --input-focus-fg: #000000;
-    --label-bg: #000000;
 }
-
-/* --- RESET & BASE --- */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-    transition: background 0.3s ease;
-}
-
-body {
-    font-family: 'Consolas', 'Courier New', monospace;
-    background: var(--bg);
-    color: var(--fg);
-    min-height: 100vh;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* --- SCROLLBAR --- */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--fg); }
