@@ -4,52 +4,104 @@
     <!-- HEADER -->
     <header class="dash-header">
       <h1>DASHBOARD</h1>
-      <div class="header-right">
-        <button class="dash-btn logout-btn" (click)="logout()">LOGOUT</button>
-      </div>
+      <button class="dash-btn logout-btn" (click)="logout()">LOGOUT</button>
     </header>
 
-    <!-- USER PROFILE PANEL -->
-    <div class="profile-panel">
-      <div class="profile-avatar">
-        {{ (userProfile()?.full_name || userProfile()?.email || 'U').charAt(0).toUpperCase() }}
-      </div>
-      <div class="profile-info">
-        <div class="profile-name">{{ userProfile()?.full_name || userProfile()?.email || 'USER' }}</div>
-        <div class="profile-role">{{ userProfile()?.role || 'candidate' }}</div>
-      </div>
-      <div class="theme-switcher">
-        <button class="theme-btn" [class.active]="currentTheme === 'light'" (click)="setTheme('light')">LIGHT</button>
-        <button class="theme-btn" [class.active]="currentTheme === 'dark'" (click)="setTheme('dark')">DARK</button>
-        <button class="theme-btn" [class.active]="currentTheme === 'high-contrast'" (click)="setTheme('high-contrast')">HC</button>
-      </div>
-    </div>
+    <!-- TWO COLUMN LAYOUT: USER DETAILS + QUIZ OPTIONS -->
+    <div class="dash-columns">
 
-    <!-- ACTION GRID -->
-    <div class="action-grid">
-      <div class="action-card" (click)="navigateToQuizMaker()">
-        <h3>GENERATE_QUIZ</h3>
-        <p>Create a new quiz using keyword or syllabus</p>
-        <button class="dash-btn">Generate</button>
-      </div>
+      <!-- LEFT: USER DETAILS PANEL -->
+      <aside class="user-panel">
+        <div class="user-panel-header">USER_DETAILS</div>
 
-      <div class="action-card" (click)="navigateToCandidate()">
-        <h3>JOIN_QUIZ</h3>
-        <p>Enter a session ID to attempt a quiz as a candidate</p>
-        <button class="dash-btn">Join</button>
-      </div>
+        <div class="user-avatar">
+          {{ (userProfile()?.full_name || userProfile()?.email || 'U').charAt(0).toUpperCase() }}
+        </div>
 
-      <div class="action-card">
-        <h3>GROUP_QUIZZES</h3>
-        <p>Create a new group quiz with your friends</p>
-        <button class="dash-btn secondary" disabled>Coming Soon</button>
-      </div>
+        <div class="user-detail-row">
+          <span class="user-detail-label">NAME</span>
+          <span class="user-detail-value">{{ userProfile()?.full_name || '—' }}</span>
+        </div>
+
+        <div class="user-detail-row">
+          <span class="user-detail-label">EMAIL</span>
+          <span class="user-detail-value">{{ userProfile()?.email || '—' }}</span>
+        </div>
+
+        <div class="user-detail-row">
+          <span class="user-detail-label">ROLE</span>
+          <span class="user-detail-value role-badge">{{ (userProfile()?.role || 'candidate') | uppercase }}</span>
+        </div>
+
+        <div class="user-detail-row">
+          <span class="user-detail-label">SESSIONS</span>
+          <span class="user-detail-value">{{ sessionIds.length }} ACTIVE</span>
+        </div>
+
+        <!-- THEME SWITCHER -->
+        <div class="theme-section">
+          <div class="theme-label">THEME</div>
+          <div class="theme-switcher">
+            <button class="theme-btn"
+              [class.active]="currentTheme === 'light'"
+              (click)="setTheme('light')"
+              title="Light theme">
+              ☀ LIGHT
+            </button>
+            <button class="theme-btn"
+              [class.active]="currentTheme === 'dark'"
+              (click)="setTheme('dark')"
+              title="Dark theme">
+              ◑ DARK
+            </button>
+            <button class="theme-btn"
+              [class.active]="currentTheme === 'high-contrast'"
+              (click)="setTheme('high-contrast')"
+              title="High contrast">
+              ● HC
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: QUIZ OPTIONS -->
+      <section class="quiz-section">
+        <div class="quiz-section-header">QUIZ_OPTIONS</div>
+
+        <div class="action-grid">
+          <div class="action-card" (click)="navigateToQuizMaker()">
+            <div class="action-icon">⚡</div>
+            <h3>GENERATE_QUIZ</h3>
+            <p>Create a new quiz using keyword or syllabus</p>
+            <button class="dash-btn">Generate</button>
+          </div>
+
+          <div class="action-card" (click)="navigateToCandidate()">
+            <div class="action-icon">🔗</div>
+            <h3>JOIN_QUIZ</h3>
+            <p>Enter a session ID to attempt a quiz as a candidate</p>
+            <button class="dash-btn">Join</button>
+          </div>
+
+          <div class="action-card action-card--disabled">
+            <div class="action-icon">👥</div>
+            <h3>GROUP_QUIZZES</h3>
+            <p>Create a new group quiz with your friends</p>
+            <button class="dash-btn secondary" disabled>Coming Soon</button>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <!-- ACTIVE SESSIONS -->
-    <section class="live-sessions" *ngIf="sessionIds.length > 0">
-      <h2 class="section-title">ACTIVE_SESSIONS</h2>
-      <div class="session-list">
+    <section class="live-sessions">
+      <h2 class="section-title">
+        ACTIVE_SESSIONS
+        <span class="session-count-badge">{{ sessionIds.length }}</span>
+      </h2>
+
+      <div class="session-list" *ngIf="sessionIds.length > 0">
         <div *ngFor="let id of sessionIds" class="session-item">
 
           <div class="session-info" (click)="toggleStudentList(id)">
@@ -72,7 +124,8 @@
               <div class="student-info">
                 <span class="student-name">{{ entry[1].name }}</span>
                 <span class="student-score">SCORE: {{ entry[1].score }}</span>
-                <span class="suspicion-badge" *ngIf="entry[1].suspicion && entry[1].suspicion !== 'CLEAN'"
+                <span class="suspicion-badge"
+                  *ngIf="entry[1].suspicion && entry[1].suspicion !== 'CLEAN'"
                   [style.color]="entry[1].suspicion === 'HIGH' ? 'var(--danger)' : 'orange'">
                   [{{ entry[1].suspicion }}]
                 </span>
@@ -83,12 +136,11 @@
 
         </div>
       </div>
-    </section>
 
-    <!-- EMPTY STATE -->
-    <div class="empty-state" *ngIf="sessionIds.length === 0">
-      >> NO_ACTIVE_SESSIONS — Generate a quiz to get started.
-    </div>
+      <div class="empty-state" *ngIf="sessionIds.length === 0">
+        >> NO_ACTIVE_SESSIONS — Generate a quiz to get started.
+      </div>
+    </section>
 
   </main>
 </div>
@@ -122,7 +174,6 @@
     </div>
 
     <hr class="modal-divider" />
-
     <label class="modal-label" for="newScore">MANUAL SCORE OVERRIDE</label>
     <input class="modal-input" type="number" [(ngModel)]="overrideValue" min="0" id="newScore" />
     <div class="modal-actions">

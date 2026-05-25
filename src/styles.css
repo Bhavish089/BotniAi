@@ -1,7 +1,99 @@
-*{
-    scroll-behavior: smooth;
+/* ============================================
+   ALGOARENA — GLOBAL STYLES & THEME VARIABLES
+   ============================================ */
+
+/* --- LIGHT THEME (default) --- */
+:root,
+html[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-secondary: #f9f9f9;
+    --bg-tertiary: #f0f0f0;
+    --fg: #111111;
+    --fg-secondary: #555555;
+    --fg-muted: #999999;
+    --border: #111111;
+    --border-secondary: #dddddd;
+    --shadow: #111111;
+    --danger: #cc0000;
+    --danger-fg: #ffffff;
+    --success-bg: #f0fdf4;
+    --success-border: #22c55e;
+    --error-bg: #fef2f2;
+    --error-border: #ef4444;
+    --input-bg: #ffffff;
+    --input-focus-bg: #111111;
+    --input-focus-fg: #ffffff;
+    --label-bg: #ffffff;
 }
 
-::-webkit-scrollbar {
-    width: 0;
+/* --- DARK THEME --- */
+html[data-theme="dark"] {
+    --bg: #0d0d0d;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #252525;
+    --fg: #e8e8e8;
+    --fg-secondary: #aaaaaa;
+    --fg-muted: #666666;
+    --border: #e8e8e8;
+    --border-secondary: #333333;
+    --shadow: #000000;
+    --danger: #ff4444;
+    --danger-fg: #0d0d0d;
+    --success-bg: #0a1f0a;
+    --success-border: #22c55e;
+    --error-bg: #1f0a0a;
+    --error-border: #ef4444;
+    --input-bg: #0d0d0d;
+    --input-focus-bg: #e8e8e8;
+    --input-focus-fg: #0d0d0d;
+    --label-bg: #0d0d0d;
 }
+
+/* --- HIGH CONTRAST THEME --- */
+html[data-theme="high-contrast"] {
+    --bg: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #111111;
+    --fg: #ffffff;
+    --fg-secondary: #eeeeee;
+    --fg-muted: #cccccc;
+    --border: #ffffff;
+    --border-secondary: #ffffff;
+    --shadow: #ffff00;
+    --danger: #ff0000;
+    --danger-fg: #ffffff;
+    --success-bg: #001a00;
+    --success-border: #00ff00;
+    --error-bg: #1a0000;
+    --error-border: #ff0000;
+    --input-bg: #000000;
+    --input-focus-bg: #ffff00;
+    --input-focus-fg: #000000;
+    --label-bg: #000000;
+}
+
+/* --- RESET & BASE --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    transition: background 0.3s ease;
+}
+
+body {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--fg); }
